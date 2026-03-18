@@ -1011,12 +1011,14 @@ export async function generateVideo(
     duration = 5,
     filePaths = [],
     files = [],
+    asyncMode = false,
   }: {
     ratio?: string;
     resolution?: string;
     duration?: number;
     filePaths?: string[];
     files?: any[];
+    asyncMode?: boolean;
   },
   refreshToken: string
 ) {
@@ -1305,6 +1307,11 @@ export async function generateVideo(
   if (!historyId)
     throw new APIException(EX.API_IMAGE_GENERATION_FAILED, "记录ID不存在");
 
+  if (asyncMode) {
+    logger.info(`异步模式：视频任务已提交，historyId: ${historyId}`);
+    return historyId;
+  }
+
   // 轮询获取结果
   let status = 20, failCode, item_list = [];
   let retryCount = 0;
@@ -1501,12 +1508,14 @@ export async function generateSeedanceVideo(
     duration = 4,
     filePaths = [],
     files = [],
+    asyncMode = false,
   }: {
     ratio?: string;
     resolution?: string;
     duration?: number;
     filePaths?: string[];
     files?: any[];
+    asyncMode?: boolean;
   },
   refreshToken: string
 ) {
@@ -1832,6 +1841,11 @@ export async function generateSeedanceVideo(
   if (!historyId)
     throw new APIException(EX.API_IMAGE_GENERATION_FAILED, "记录ID不存在");
 
+  if (asyncMode) {
+    logger.info(`Seedance 异步模式：视频任务已提交，historyId: ${historyId}`);
+    return historyId;
+  }
+
   // 轮询获取结果（与普通视频相同的逻辑）
   let status = 20, failCode, item_list = [];
   let retryCount = 0;
@@ -2000,4 +2014,60 @@ function buildMetaListFromPrompt(prompt: string, materials: Array<{ type: Seedan
   }
 
   return metaList;
+}
+
+/**
+ * 查询视频生成任务状态（单次查询，不轮询）
+ */
+export async function checkVideoStatus(historyId: string, refreshToken: string): Promise<{
+  task_id: string;
+  status: "pending" | "completed" | "failed";
+  video_url?: string;
+  fail_code?: number;
+}> {
+  const result = await request("post", "/mweb/v1/get_history_by_ids", refreshToken, {
+    data: { history_ids: [historyId] },
+  });
+
+  const historyData = result.history_list?.[0] || result[historyId];
+
+  if (!historyData) {
+    return { task_id: historyId, status: "pending" };
+  }
+
+  const status = historyData.status;
+  const failCode = historyData.fail_code;
+  const item_list = historyData.item_list || [];
+
+  if (status === 20) {
+    return { task_id: historyId, status: "pending" };
+  }
+
+  if (status === 30) {
+    return { task_id: historyId, status: "failed", fail_code: failCode };
+  }
+
+  // status === 10，生成完成
+  const itemId = item_list?.[0]?.item_id
+    || item_list?.[0]?.id
+    || item_list?.[0]?.local_item_id
+    || item_list?.[0]?.common_attr?.id;
+
+  let videoUrl: string | undefined;
+  if (itemId) {
+    try {
+      videoUrl = await fetchHighQualityVideoUrl(String(itemId), refreshToken);
+    } catch (e) {
+      logger.warn(`checkVideoStatus: 获取高质量视频URL失败，将使用预览URL: ${e.message}`);
+    }
+  }
+
+  if (!videoUrl) {
+    videoUrl = item_list?.[0]?.video?.transcoded_video?.origin?.video_url
+      || item_list?.[0]?.video?.play_url
+      || item_list?.[0]?.video?.download_url
+      || item_list?.[0]?.video?.url;
+  }
+
+  return { task_id: historyId, status: "completed", video_url: videoUrl };
 }
