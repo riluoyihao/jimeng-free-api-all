@@ -24,12 +24,20 @@ export function isPollerHealthy(): boolean {
 /** 下载视频文件到指定路径 */
 async function downloadVideo(videoUrl: string, savePath: string): Promise<void> {
   await fs.ensureDir(path.dirname(savePath));
-  const response = await axios.get(videoUrl, { responseType: "stream" });
+  const response = await axios.get(videoUrl, { responseType: "stream", timeout: 5 * 60 * 1000 });
   await new Promise<void>((resolve, reject) => {
     const writer = fs.createWriteStream(savePath);
     response.data.pipe(writer);
+    response.data.on("error", (err: Error) => {
+      writer.destroy();
+      fs.remove(savePath).catch(() => {});
+      reject(err);
+    });
     writer.on("finish", resolve);
-    writer.on("error", reject);
+    writer.on("error", (err: Error) => {
+      fs.remove(savePath).catch(() => {});
+      reject(err);
+    });
   });
   logger.info(`视频已下载到: ${savePath}`);
 }
