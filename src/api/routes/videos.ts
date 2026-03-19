@@ -1,10 +1,17 @@
 import _ from 'lodash';
+import path from "path";
+import fs from "fs-extra";
+import mime from "mime";
 
 import Request from '@/lib/request/Request.ts';
 import Response from '@/lib/response/Response.ts';
 import { tokenSplit } from '@/api/controllers/core.ts';
-import { generateVideo, generateSeedanceVideo, isSeedanceModel, DEFAULT_MODEL } from '@/api/controllers/videos.ts';
+import { generateVideo, generateSeedanceVideo, isSeedanceModel, DEFAULT_MODEL, submitVideoTask, submitSeedanceVideoTask } from '@/api/controllers/videos.ts';
 import util from '@/lib/util.ts';
+import {
+  generateVideoName,
+  insertTask,
+} from "@/lib/video-task-db.ts";
 
 export default {
 
@@ -128,7 +135,117 @@ export default {
                     }]
                 };
             }
-        }
+        },
+
+        '/storyboard': async (request: Request) => {
+            request
+                .validate('body.storyboard_path', v => _.isString(v) && v.length > 0)
+                .validate('body.parentpath', v => _.isString(v) && v.length > 0)
+                .validate('body.save_path', v => _.isString(v) && v.length > 0)
+                .validate('body.model', v => _.isUndefined(v) || _.isString(v))
+                .validate('body.resolution', v => _.isUndefined(v) || _.isString(v))
+                .validate('headers.authorization', _.isString);
+
+            const tokens = tokenSplit(request.headers.authorization);
+            const token = _.sample(tokens);
+
+            const {
+                storyboard_path,
+                parentpath,
+                save_path,
+                model = 'jimeng-video-seedance-2.0',
+                resolution = '720p',
+            } = request.body;
+
+            // 读取分镜 JSON
+            if (!await fs.pathExists(storyboard_path)) {
+                throw new Error(`storyboard_path 不存在: ${storyboard_path}`);
+            }
+            const storyboard = JSON.parse(await fs.readFile(storyboard_path, 'utf-8'));
+
+            const {
+                episode,
+                video_number,
+                title,
+                style = '',
+                references = '',
+                timeline = '',
+                sound_effects = '',
+                music = '',
+                aspect_ratio,
+                duration_seconds,
+                reference_images = [],
+            } = storyboard;
+
+            // 拼装 prompt
+            const prompt = [
+                style,
+                references,
+                timeline,
+                sound_effects ? `音效：${sound_effects}` : '',
+                music ? `配乐：${music}` : '',
+            ].filter(Boolean).join('\n');
+
+            const ratio = aspect_ratio || '16:9';
+            const duration = duration_seconds || 5;
+
+            // 构建 files 对象列表（模拟 koa-body 的 file 格式）
+            const files = reference_images.map((ref: { image_path: string }) => {
+                const absPath = path.join(parentpath, ref.image_path);
+                return {
+                    filepath: absPath,
+                    originalFilename: path.basename(ref.image_path),
+                    mimetype: mime.getType(absPath) || 'image/jpeg',
+                };
+            });
+
+            // 校验参考图片文件存在
+            for (const f of files) {
+                if (!await fs.pathExists(f.filepath)) {
+                    throw new Error(`参考图片不存在: ${f.filepath}`);
+                }
+            }
+
+            // 生成视频名（自动去重）
+            const video_name = generateVideoName(episode, video_number, title);
+
+            // 完整保存路径：parentpath + save_path + video_name
+            const full_save_path = path.join(parentpath, save_path, video_name);
+
+            // 提交任务（非阻塞）
+            let historyId: string;
+            const seedance = isSeedanceModel(model);
+            const seedanceDuration = duration === 5 ? 4 : duration;
+            const seedanceRatio = ratio === '1:1' ? '4:3' : ratio;
+
+            if (seedance) {
+                historyId = await submitSeedanceVideoTask(
+                    model, prompt,
+                    { ratio: seedanceRatio, resolution, duration: seedanceDuration, files },
+                    token
+                );
+            } else {
+                historyId = await submitVideoTask(
+                    model, prompt,
+                    { ratio, resolution, duration, files },
+                    token
+                );
+            }
+
+            // 写入数据库
+            const task = insertTask({
+                video_name,
+                save_path: full_save_path,
+                history_id: historyId,
+                refresh_token: token,
+            });
+
+            return {
+                task_id: task.task_id,
+                video_name: task.video_name,
+                status: task.status,
+            };
+        },
 
     }
 
