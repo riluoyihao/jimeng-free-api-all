@@ -254,10 +254,39 @@ class BrowserService {
         return result.text;
       }
     } catch (err) {
-      // 如果执行失败（页面崩溃等），清理会话以便下次重建
-      logger.error(`BrowserService: 请求执行失败: ${(err as Error).message}`);
+      // 如果执行失败（页面崩溃等），清理会话并自动重试一次
+      logger.warn(`BrowserService: 请求执行失败，清理会话并重试: ${(err as Error).message}`);
       await this.closeSession(token);
-      throw err;
+      try {
+        const retrySession = await this.createSession(token);
+        const retryResult = await retrySession.page.evaluate(
+          async ({ url, options }) => {
+            try {
+              const res = await fetch(url, {
+                method: options.method || "GET",
+                headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+                body: options.body,
+                credentials: "include",
+              });
+              const text = await res.text();
+              return { ok: res.ok, status: res.status, text };
+            } catch (err: any) {
+              return { ok: false, status: 0, text: "", error: err.message };
+            }
+          },
+          { url, options }
+        );
+        logger.info(`BrowserService: 重试成功，响应状态 ${retryResult.status}`);
+        try {
+          return JSON.parse(retryResult.text);
+        } catch {
+          return retryResult.text;
+        }
+      } catch (retryErr) {
+        logger.error(`BrowserService: 重试也失败: ${(retryErr as Error).message}`);
+        await this.closeSession(token);
+        throw retryErr;
+      }
     }
   }
 
