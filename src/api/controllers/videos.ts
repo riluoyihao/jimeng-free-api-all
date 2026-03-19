@@ -1998,6 +1998,313 @@ function buildMetaListFromPrompt(prompt: string, materials: Array<{ type: Seedan
       metaList.push({ meta_type: "text", text: "素材生成视频" });
     }
   }
-
   return metaList;
+}
+
+/**
+ * 提交普通视频任务（不轮询），返回 historyId
+ */
+export async function submitVideoTask(
+  _model: string,
+  prompt: string,
+  {
+    ratio = "1:1",
+    resolution = "720p",
+    duration = 5,
+    filePaths = [],
+    files = [],
+  }: {
+    ratio?: string;
+    resolution?: string;
+    duration?: number;
+    filePaths?: string[];
+    files?: any[];
+  },
+  refreshToken: string
+): Promise<string> {
+  const model = getModel(_model);
+  const { width, height } = resolveVideoResolution(resolution, ratio);
+
+  const { totalCredit } = await getCredit(refreshToken);
+  if (totalCredit <= 0) await receiveCredit(refreshToken);
+
+  let first_frame_image: any;
+  let end_frame_image: any;
+
+  if (files && files.length > 0) {
+    const uploadIDs: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file?.filepath) continue;
+      try {
+        const buffer = fs.readFileSync(file.filepath);
+        const uri = await uploadImageBufferForVideo(buffer, refreshToken);
+        if (uri) uploadIDs.push(uri);
+      } catch (err) {
+        if (i === 0) throw new APIException(EX.API_REQUEST_FAILED, `首帧文件上传失败: ${err.message}`);
+      }
+    }
+    if (uploadIDs.length === 0) throw new APIException(EX.API_REQUEST_FAILED, "所有文件上传失败");
+    if (uploadIDs[0]) {
+      first_frame_image = { format: "", height, id: util.uuid(), image_uri: uploadIDs[0], name: "", platform_type: 1, source_from: "upload", type: "image", uri: uploadIDs[0], width };
+    }
+    if (uploadIDs[1]) {
+      end_frame_image = { format: "", height, id: util.uuid(), image_uri: uploadIDs[1], name: "", platform_type: 1, source_from: "upload", type: "image", uri: uploadIDs[1], width };
+    }
+  } else if (filePaths && filePaths.length > 0) {
+    const uploadIDs: string[] = [];
+    for (let i = 0; i < filePaths.length; i++) {
+      if (!filePaths[i]) continue;
+      try {
+        const uri = await uploadImageForVideo(filePaths[i], refreshToken);
+        if (uri) uploadIDs.push(uri);
+      } catch (err) {
+        if (i === 0) throw new APIException(EX.API_REQUEST_FAILED, `首帧图片上传失败: ${err.message}`);
+      }
+    }
+    if (uploadIDs.length === 0) throw new APIException(EX.API_REQUEST_FAILED, "所有图片上传失败");
+    if (uploadIDs[0]) {
+      first_frame_image = { format: "", height, id: util.uuid(), image_uri: uploadIDs[0], name: "", platform_type: 1, source_from: "upload", type: "image", uri: uploadIDs[0], width };
+    }
+    if (uploadIDs[1]) {
+      end_frame_image = { format: "", height, id: util.uuid(), image_uri: uploadIDs[1], name: "", platform_type: 1, source_from: "upload", type: "image", uri: uploadIDs[1], width };
+    }
+  }
+
+  const componentId = util.uuid();
+  const draftVersion = MODEL_DRAFT_VERSIONS[_model] || DEFAULT_DRAFT_VERSION;
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const divisor = gcd(width, height);
+  const aspectRatio = `${width / divisor}:${height / divisor}`;
+  const metricsExtra = JSON.stringify({ enterFrom: "click", isDefaultSeed: 1, promptSource: "custom", isRegenerate: false, originSubmitId: util.uuid() });
+
+  const { aigc_data } = await request("post", "/mweb/v1/aigc_draft/generate", refreshToken, {
+    params: { aigc_features: "app_lip_sync", web_version: "6.6.0", da_version: draftVersion },
+    data: {
+      extend: {
+        root_model: end_frame_image ? MODEL_MAP["jimeng-video-3.0"] : model,
+        m_video_commerce_info: { benefit_type: "basic_video_operation_vgfm_v_three", resource_id: "generate_video", resource_id_type: "str", resource_sub_type: "aigc" },
+        m_video_commerce_info_list: [{ benefit_type: "basic_video_operation_vgfm_v_three", resource_id: "generate_video", resource_id_type: "str", resource_sub_type: "aigc" }],
+      },
+      submit_id: util.uuid(),
+      metrics_extra: metricsExtra,
+      draft_content: JSON.stringify({
+        type: "draft", id: util.uuid(), min_version: "3.0.5", is_from_tsn: true, version: draftVersion, main_component_id: componentId,
+        component_list: [{
+          type: "video_base_component", id: componentId, min_version: "1.0.0",
+          metadata: { type: "", id: util.uuid(), created_platform: 3, created_platform_version: "", created_time_in_ms: Date.now(), created_did: "" },
+          generate_type: "gen_video", aigc_mode: "workbench",
+          abilities: {
+            type: "", id: util.uuid(),
+            gen_video: {
+              id: util.uuid(), type: "",
+              text_to_video_params: {
+                type: "", id: util.uuid(), model_req_key: model, priority: 0,
+                seed: Math.floor(Math.random() * 100000000) + 2500000000,
+                video_aspect_ratio: aspectRatio,
+                video_gen_inputs: [{ duration_ms: duration * 1000, first_frame_image, end_frame_image, fps: 24, id: util.uuid(), min_version: "3.0.5", prompt, resolution, type: "", video_mode: 2 }],
+              },
+              video_task_extra: metricsExtra,
+            },
+          },
+        }],
+      }),
+      http_common_info: { aid: DEFAULT_ASSISTANT_ID },
+    },
+  });
+
+  const historyId = aigc_data?.history_record_id;
+  if (!historyId) throw new APIException(EX.API_IMAGE_GENERATION_FAILED, "记录ID不存在");
+  logger.info(`视频任务提交成功，historyId: ${historyId}`);
+  return historyId;
+}
+
+/**
+ * 提交 Seedance 视频任务（不轮询），返回 historyId
+ */
+export async function submitSeedanceVideoTask(
+  _model: string,
+  prompt: string,
+  {
+    ratio = "4:3",
+    resolution = "720p",
+    duration = 4,
+    filePaths = [],
+    files = [],
+  }: {
+    ratio?: string;
+    resolution?: string;
+    duration?: number;
+    filePaths?: string[];
+    files?: any[];
+  },
+  refreshToken: string
+): Promise<string> {
+  const model = getModel(_model);
+  const benefitType = SEEDANCE_BENEFIT_TYPE_MAP[_model] || "dreamina_video_seedance_20_pro";
+  const actualDuration = duration || 4;
+  const { width, height } = resolveVideoResolution(resolution, ratio);
+  const draftVersion = MODEL_DRAFT_VERSIONS[_model] || "3.3.9";
+
+  const { totalCredit } = await getCredit(refreshToken);
+  if (totalCredit <= 0) await receiveCredit(refreshToken);
+
+  const uploadedMaterials: UploadedMaterial[] = [];
+
+  if (files && files.length > 0) {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file?.filepath) continue;
+      const materialType = detectMaterialType(file);
+      const buffer = fs.readFileSync(file.filepath);
+      if (materialType === "image") {
+        const uri = await uploadImageBufferForVideo(buffer, refreshToken);
+        uploadedMaterials.push({ type: "image", uri, name: file.originalFilename || "" });
+      } else {
+        const result = await uploadMediaForVideo(buffer, materialType as "video" | "audio", refreshToken, file.originalFilename);
+        uploadedMaterials.push({ type: materialType, ...result });
+      }
+    }
+  } else if (filePaths && filePaths.length > 0) {
+    for (const fp of filePaths) {
+      if (!fp) continue;
+      const uri = await uploadImageForVideo(fp, refreshToken);
+      uploadedMaterials.push({ type: "image", uri });
+    }
+  }
+
+  const materialList: any[] = [];
+  const metaList: any[] = [];
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const divisor = gcd(width, height);
+  const aspectRatio = `${width / divisor}:${height / divisor}`;
+
+  for (const mat of uploadedMaterials) {
+    if (mat.type === "image" && mat.uri) {
+      materialList.push({ id: util.uuid(), type: "image", image_uri: mat.uri });
+    } else if ((mat.type === "video" || mat.type === "audio") && mat.vid) {
+      materialList.push({ id: util.uuid(), type: mat.type === "audio" ? "audio" : "video", vid: mat.vid });
+    }
+  }
+  metaList.push({ type: "text", text: prompt });
+
+  const componentId = util.uuid();
+  const submitId = util.uuid();
+  const metricsExtra = JSON.stringify({ enterFrom: "click", isDefaultSeed: 1, promptSource: "custom", isRegenerate: false, originSubmitId: submitId });
+  const finalBenefitType = benefitType;
+
+  const token = await acquireToken(refreshToken);
+  const generateQueryParams = new URLSearchParams({
+    aid: String(CORE_ASSISTANT_ID), device_platform: "web", region: "cn", webId: String(WEB_ID),
+    da_version: draftVersion, web_component_open_flag: "1", web_version: "7.5.0", aigc_features: "app_lip_sync",
+  });
+  const generateUrl = `https://jimeng.jianying.com/mweb/v1/aigc_draft/generate?${generateQueryParams.toString()}`;
+  const generateBody = {
+    extend: {
+      root_model: model,
+      m_video_commerce_info: { benefit_type: finalBenefitType, resource_id: "generate_video", resource_id_type: "str", resource_sub_type: "aigc" },
+      m_video_commerce_info_list: [{ benefit_type: finalBenefitType, resource_id: "generate_video", resource_id_type: "str", resource_sub_type: "aigc" }],
+    },
+    submit_id: submitId,
+    metrics_extra: metricsExtra,
+    draft_content: JSON.stringify({
+      type: "draft", id: util.uuid(), min_version: draftVersion, min_features: ["AIGC_Video_UnifiedEdit"],
+      is_from_tsn: true, version: draftVersion, main_component_id: componentId,
+      component_list: [{
+        type: "video_base_component", id: componentId, min_version: "1.0.0", aigc_mode: "workbench",
+        metadata: { type: "", id: util.uuid(), created_platform: 3, created_platform_version: "", created_time_in_ms: String(Date.now()), created_did: "" },
+        generate_type: "gen_video",
+        abilities: {
+          type: "", id: util.uuid(),
+          gen_video: {
+            type: "", id: util.uuid(),
+            text_to_video_params: {
+              type: "", id: util.uuid(),
+              video_gen_inputs: [{
+                type: "", id: util.uuid(), min_version: draftVersion, prompt: "", video_mode: 2, fps: 24,
+                duration_ms: actualDuration * 1000, idip_meta_list: [],
+                unified_edit_input: { type: "", id: util.uuid(), material_list: materialList, meta_list: metaList },
+              }],
+              video_aspect_ratio: aspectRatio, seed: Math.floor(Math.random() * 1000000000),
+              model_req_key: model, priority: 0,
+            },
+            video_task_extra: metricsExtra,
+          },
+        },
+        process_type: 1,
+      }],
+    }),
+    http_common_info: { aid: CORE_ASSISTANT_ID },
+  };
+
+  const generateResult = await browserService.fetch(token, generateUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(generateBody),
+  });
+
+  const { ret, errmsg, data: generateData } = generateResult;
+  if (ret !== undefined && Number(ret) !== 0) {
+    if (Number(ret) === 5000) throw new APIException(EX.API_IMAGE_GENERATION_INSUFFICIENT_POINTS, `积分不足: ${errmsg}`);
+    throw new APIException(EX.API_REQUEST_FAILED, `请求失败: ${errmsg}`);
+  }
+  const aigc_data = generateData?.aigc_data || generateResult.aigc_data;
+  const historyId = aigc_data?.history_record_id;
+  if (!historyId) throw new APIException(EX.API_IMAGE_GENERATION_FAILED, "记录ID不存在");
+
+  logger.info(`Seedance 任务提交成功，historyId: ${historyId}`);
+  return historyId;
+}
+
+/**
+ * 单次查询视频任务状态（不循环等待）
+ * status: 20=处理中, 30=失败, 其他=成功
+ */
+export async function queryVideoTaskStatus(
+  historyId: string,
+  refreshToken: string
+): Promise<{ done: boolean; failed: boolean; videoUrl?: string; error?: string }> {
+  try {
+    const result = await request("post", "/mweb/v1/get_history_by_ids", refreshToken, {
+      data: { history_ids: [historyId] },
+    });
+
+    const historyData = result.history_list?.[0] || result[historyId];
+    if (!historyData) {
+      return { done: false, failed: false };
+    }
+
+    const status = historyData.status;
+    const failCode = historyData.fail_code;
+    const item_list = historyData.item_list || [];
+
+    if (status === 30) {
+      const msg = failCode === 2038 ? "内容被过滤" : `生成失败，错误码: ${failCode}`;
+      return { done: true, failed: true, error: msg };
+    }
+
+    if (status === 20) {
+      return { done: false, failed: false };
+    }
+
+    // 完成，提取视频 URL
+    const itemId = item_list?.[0]?.item_id || item_list?.[0]?.id || item_list?.[0]?.local_item_id;
+    if (itemId) {
+      const hqUrl = await fetchHighQualityVideoUrl(String(itemId), refreshToken);
+      if (hqUrl) return { done: true, failed: false, videoUrl: hqUrl };
+    }
+
+    const videoUrl =
+      item_list?.[0]?.video?.transcoded_video?.origin?.video_url ||
+      item_list?.[0]?.video?.play_url ||
+      item_list?.[0]?.video?.download_url ||
+      item_list?.[0]?.video?.url;
+
+    if (videoUrl) return { done: true, failed: false, videoUrl };
+
+    return { done: true, failed: true, error: "无法提取视频 URL" };
+  } catch (err) {
+    logger.error(`queryVideoTaskStatus 出错: ${err.message}`);
+    return { done: false, failed: false };
+  }
 }
