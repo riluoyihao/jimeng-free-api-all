@@ -6,6 +6,8 @@ import logger from "@/lib/logger.ts";
 
 const DB_PATH = path.join(path.resolve(), "data", "tasks.db");
 
+const MAX_NAME_SEQUENCE = 999;
+
 export type TaskStatus = "pending" | "running" | "completed" | "failed";
 
 export interface VideoTask {
@@ -20,9 +22,15 @@ export interface VideoTask {
   completed_at: number | null;
 }
 
-let db: Database.Database;
+let db: Database.Database | null = null;
+
+function getDb(): Database.Database {
+  if (!db) throw new Error("数据库尚未初始化，请先调用 initDb()");
+  return db;
+}
 
 export function initDb(): void {
+  if (db) return;
   fs.ensureDirSync(path.dirname(DB_PATH));
   db = new Database(DB_PATH);
   db.exec(`
@@ -45,9 +53,9 @@ export function initDb(): void {
 export function generateVideoName(episode: number, videoNumber: number, title: string): string {
   const base = `EP${episode}_video${videoNumber}_${title}`;
   let index = 1;
-  while (index <= 999) {
+  while (index <= MAX_NAME_SEQUENCE) {
     const name = `${base}_${String(index).padStart(2, "0")}.mp4`;
-    const row = db.prepare("SELECT 1 FROM video_tasks WHERE video_name = ?").get(name);
+    const row = getDb().prepare("SELECT 1 FROM video_tasks WHERE video_name = ?").get(name);
     if (!row) return name;
     index++;
   }
@@ -71,7 +79,7 @@ export function insertTask(params: {
     created_at: Math.floor(Date.now() / 1000),
     completed_at: null,
   };
-  db.prepare(`
+  getDb().prepare(`
     INSERT INTO video_tasks (task_id, history_id, video_name, save_path, refresh_token, status, error, created_at, completed_at)
     VALUES (@task_id, @history_id, @video_name, @save_path, @refresh_token, @status, @error, @created_at, @completed_at)
   `).run(task);
@@ -79,27 +87,27 @@ export function insertTask(params: {
 }
 
 export function updateTaskHistoryId(task_id: string, history_id: string): void {
-  db.prepare("UPDATE video_tasks SET history_id = ? WHERE task_id = ?").run(history_id, task_id);
+  getDb().prepare("UPDATE video_tasks SET history_id = ? WHERE task_id = ?").run(history_id, task_id);
 }
 
 export function updateTaskStatus(task_id: string, status: TaskStatus, error?: string): void {
-  db.prepare("UPDATE video_tasks SET status = ?, error = ? WHERE task_id = ?")
-    .run(status, error || null, task_id);
-}
-
-export function updateTaskCompleted(task_id: string): void {
-  db.prepare("UPDATE video_tasks SET status = 'completed', completed_at = ? WHERE task_id = ?")
-    .run(Math.floor(Date.now() / 1000), task_id);
+  if (status === "completed") {
+    getDb().prepare("UPDATE video_tasks SET status = ?, error = ?, completed_at = ? WHERE task_id = ?")
+      .run(status, error || null, Math.floor(Date.now() / 1000), task_id);
+  } else {
+    getDb().prepare("UPDATE video_tasks SET status = ?, error = ? WHERE task_id = ?")
+      .run(status, error || null, task_id);
+  }
 }
 
 export function getTask(task_id: string): VideoTask | null {
-  return db.prepare("SELECT * FROM video_tasks WHERE task_id = ?").get(task_id) as VideoTask | null;
+  return getDb().prepare("SELECT * FROM video_tasks WHERE task_id = ?").get(task_id) as VideoTask | null;
 }
 
 export function getAllTasks(): VideoTask[] {
-  return db.prepare("SELECT * FROM video_tasks ORDER BY created_at DESC").all() as VideoTask[];
+  return getDb().prepare("SELECT * FROM video_tasks ORDER BY created_at DESC").all() as VideoTask[];
 }
 
-export function getPendingTasks(): VideoTask[] {
-  return db.prepare("SELECT * FROM video_tasks WHERE status = 'pending' OR status = 'running'").all() as VideoTask[];
+export function getActiveTasks(): VideoTask[] {
+  return getDb().prepare("SELECT * FROM video_tasks WHERE status = 'pending' OR status = 'running'").all() as VideoTask[];
 }
