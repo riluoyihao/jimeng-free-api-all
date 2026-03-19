@@ -73,9 +73,14 @@ async function pollActiveTasks(): Promise<void> {
       }
 
       if (result.videoUrl) {
-        await downloadVideo(result.videoUrl, task.save_path);
-        updateTaskStatus(task.task_id, "completed");
-        logger.info(`[Poller] 任务 ${task.task_id} 完成，视频已保存: ${task.save_path}`);
+        try {
+          await downloadVideo(result.videoUrl, task.save_path);
+          updateTaskStatus(task.task_id, "completed");
+          logger.info(`[Poller] 任务 ${task.task_id} 完成，视频已保存: ${task.save_path}`);
+        } catch (downloadErr) {
+          updateTaskStatus(task.task_id, "failed", `视频下载失败: ${downloadErr.message}`);
+          logger.error(`[Poller] 任务 ${task.task_id} 视频下载失败: ${downloadErr.message}`);
+        }
       } else {
         updateTaskStatus(task.task_id, "failed", "完成但未获取到视频URL");
         logger.error(`[Poller] 任务 ${task.task_id} 完成但无视频URL`);
