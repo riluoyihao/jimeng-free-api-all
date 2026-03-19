@@ -100,12 +100,14 @@ export function updateTaskStatus(task_id: string, status: TaskStatus, error?: st
   }
 }
 
-export function getTask(task_id: string): VideoTask | null {
-  return getDb().prepare("SELECT * FROM video_tasks WHERE task_id = ?").get(task_id) as VideoTask | null;
+const TASK_COLUMNS = "task_id, history_id, video_name, save_path, status, error, created_at, completed_at";
+
+export function getTask(task_id: string): Omit<VideoTask, "refresh_token"> | null {
+  return getDb().prepare(`SELECT ${TASK_COLUMNS} FROM video_tasks WHERE task_id = ?`).get(task_id) as Omit<VideoTask, "refresh_token"> | null;
 }
 
-export function getAllTasks(): VideoTask[] {
-  return getDb().prepare("SELECT * FROM video_tasks ORDER BY created_at DESC").all() as VideoTask[];
+export function getAllTasks(): Omit<VideoTask, "refresh_token">[] {
+  return getDb().prepare(`SELECT ${TASK_COLUMNS} FROM video_tasks ORDER BY created_at DESC`).all() as Omit<VideoTask, "refresh_token">[];
 }
 
 export function getActiveTasks(): VideoTask[] {

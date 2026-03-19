@@ -177,6 +177,10 @@ export default {
                 reference_images = [],
             } = storyboard;
 
+            if (episode === undefined || episode === null) throw new Error("storyboard JSON 缺少必填字段: episode");
+            if (video_number === undefined || video_number === null) throw new Error("storyboard JSON 缺少必填字段: video_number");
+            if (!title) throw new Error("storyboard JSON 缺少必填字段: title");
+
             // 拼装 prompt
             const prompt = [
                 style,
