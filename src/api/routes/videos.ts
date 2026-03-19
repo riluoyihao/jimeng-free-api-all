@@ -155,6 +155,7 @@ export default {
                 save_path,
                 model = 'jimeng-video-seedance-2.0',
                 resolution = '720p',
+                dry_run = false,
             } = request.body;
 
             // 读取分镜 JSON
@@ -203,18 +204,40 @@ export default {
                 };
             });
 
+            // 生成视频名（自动去重）
+            const video_name = generateVideoName(episode, video_number, title);
+
+            // 完整保存路径：parentpath + save_path + video_name
+            const full_save_path = path.join(parentpath, save_path, video_name);
+
+            // dry_run 模式：只返回组装好的参数，不调用即梦 API 也不写数据库
+            if (dry_run) {
+                const seedance = isSeedanceModel(model);
+                const finalDuration = seedance ? (duration === 5 ? 4 : duration) : duration;
+                const finalRatio = seedance ? (ratio === '1:1' ? '4:3' : ratio) : ratio;
+                return {
+                    dry_run: true,
+                    model,
+                    prompt,
+                    ratio: finalRatio,
+                    resolution,
+                    duration: finalDuration,
+                    video_name,
+                    full_save_path,
+                    files: files.map((f: { filepath: string; originalFilename: string; mimetype: string }) => ({
+                        filepath: f.filepath,
+                        originalFilename: f.originalFilename,
+                        mimetype: f.mimetype,
+                    })),
+                };
+            }
+
             // 校验参考图片文件存在
             for (const f of files) {
                 if (!await fs.pathExists(f.filepath)) {
                     throw new Error(`参考图片不存在: ${f.filepath}`);
                 }
             }
-
-            // 生成视频名（自动去重）
-            const video_name = generateVideoName(episode, video_number, title);
-
-            // 完整保存路径：parentpath + save_path + video_name
-            const full_save_path = path.join(parentpath, save_path, video_name);
 
             // 提交任务（非阻塞）
             let historyId: string;

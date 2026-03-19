@@ -1492,7 +1492,10 @@ export async function generateVideo(
  * @param refreshToken 刷新令牌
  * @returns 视频URL
  */
-export async function generateSeedanceVideo(
+/**
+ * 内部函数：上传文件、构建请求、提交 Seedance 任务，返回 historyId（不轮询）
+ */
+async function submitSeedanceRequest(
   _model: string,
   prompt: string,
   {
@@ -1509,19 +1512,14 @@ export async function generateSeedanceVideo(
     files?: any[];
   },
   refreshToken: string
-) {
+): Promise<string> {
   const model = getModel(_model);
   const benefitType = SEEDANCE_BENEFIT_TYPE_MAP[_model] || "dreamina_video_seedance_20_pro";
-
-  // Seedance 2.0 默认时长为4秒
   const actualDuration = duration || 4;
-
-  // 解析分辨率参数获取实际的宽高
   const { width, height } = resolveVideoResolution(resolution, ratio);
 
-  logger.info(`Seedance 2.0 生成: 模型=${_model} 映射=${model} ${width}x${height} (${ratio}@${resolution}) 时长=${actualDuration}秒`);
+  logger.info(`Seedance 2.0 提交: 模型=${_model} 映射=${model} ${width}x${height} (${ratio}@${resolution}) 时长=${actualDuration}秒`);
 
-  // 检查积分
   const { totalCredit } = await getCredit(refreshToken);
   if (totalCredit <= 0)
     await receiveCredit(refreshToken);
@@ -1832,6 +1830,30 @@ export async function generateSeedanceVideo(
   if (!historyId)
     throw new APIException(EX.API_IMAGE_GENERATION_FAILED, "记录ID不存在");
 
+  logger.info(`Seedance 任务提交成功，historyId: ${historyId}`);
+  return historyId;
+}
+
+export async function generateSeedanceVideo(
+  _model: string,
+  prompt: string,
+  {
+    ratio = "4:3",
+    resolution = "720p",
+    duration = 4,
+    filePaths = [],
+    files = [],
+  }: {
+    ratio?: string;
+    resolution?: string;
+    duration?: number;
+    filePaths?: string[];
+    files?: any[];
+  },
+  refreshToken: string
+) {
+  const historyId = await submitSeedanceRequest(_model, prompt, { ratio, resolution, duration, filePaths, files }, refreshToken);
+
   // 轮询获取结果（与普通视频相同的逻辑）
   let status = 20, failCode, item_list = [];
   let retryCount = 0;
@@ -2125,13 +2147,7 @@ export async function submitVideoTask(
 export async function submitSeedanceVideoTask(
   _model: string,
   prompt: string,
-  {
-    ratio = "4:3",
-    resolution = "720p",
-    duration = 4,
-    filePaths = [],
-    files = [],
-  }: {
+  options: {
     ratio?: string;
     resolution?: string;
     duration?: number;
@@ -2140,120 +2156,7 @@ export async function submitSeedanceVideoTask(
   },
   refreshToken: string
 ): Promise<string> {
-  const model = getModel(_model);
-  const benefitType = SEEDANCE_BENEFIT_TYPE_MAP[_model] || "dreamina_video_seedance_20_pro";
-  const actualDuration = duration || 4;
-  const { width, height } = resolveVideoResolution(resolution, ratio);
-  const draftVersion = MODEL_DRAFT_VERSIONS[_model] || "3.3.9";
-
-  const { totalCredit } = await getCredit(refreshToken);
-  if (totalCredit <= 0) await receiveCredit(refreshToken);
-
-  const uploadedMaterials: UploadedMaterial[] = [];
-
-  if (files && files.length > 0) {
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (!file?.filepath) continue;
-      const materialType = detectMaterialType(file);
-      const buffer = fs.readFileSync(file.filepath);
-      if (materialType === "image") {
-        const uri = await uploadImageBufferForVideo(buffer, refreshToken);
-        uploadedMaterials.push({ type: "image", uri, name: file.originalFilename || "" });
-      } else {
-        const result = await uploadMediaForVideo(buffer, materialType as "video" | "audio", refreshToken, file.originalFilename);
-        uploadedMaterials.push({ type: materialType, ...result });
-      }
-    }
-  } else if (filePaths && filePaths.length > 0) {
-    for (const fp of filePaths) {
-      if (!fp) continue;
-      const uri = await uploadImageForVideo(fp, refreshToken);
-      uploadedMaterials.push({ type: "image", uri });
-    }
-  }
-
-  const materialList: any[] = [];
-  const metaList: any[] = [];
-  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
-  const divisor = gcd(width, height);
-  const aspectRatio = `${width / divisor}:${height / divisor}`;
-
-  for (const mat of uploadedMaterials) {
-    if (mat.type === "image" && mat.uri) {
-      materialList.push({ id: util.uuid(), type: "image", image_uri: mat.uri });
-    } else if ((mat.type === "video" || mat.type === "audio") && mat.vid) {
-      materialList.push({ id: util.uuid(), type: mat.type === "audio" ? "audio" : "video", vid: mat.vid });
-    }
-  }
-  metaList.push({ type: "text", text: prompt });
-
-  const componentId = util.uuid();
-  const submitId = util.uuid();
-  const metricsExtra = JSON.stringify({ enterFrom: "click", isDefaultSeed: 1, promptSource: "custom", isRegenerate: false, originSubmitId: submitId });
-  const finalBenefitType = benefitType;
-
-  const token = await acquireToken(refreshToken);
-  const generateQueryParams = new URLSearchParams({
-    aid: String(CORE_ASSISTANT_ID), device_platform: "web", region: "cn", webId: String(WEB_ID),
-    da_version: draftVersion, web_component_open_flag: "1", web_version: "7.5.0", aigc_features: "app_lip_sync",
-  });
-  const generateUrl = `https://jimeng.jianying.com/mweb/v1/aigc_draft/generate?${generateQueryParams.toString()}`;
-  const generateBody = {
-    extend: {
-      root_model: model,
-      m_video_commerce_info: { benefit_type: finalBenefitType, resource_id: "generate_video", resource_id_type: "str", resource_sub_type: "aigc" },
-      m_video_commerce_info_list: [{ benefit_type: finalBenefitType, resource_id: "generate_video", resource_id_type: "str", resource_sub_type: "aigc" }],
-    },
-    submit_id: submitId,
-    metrics_extra: metricsExtra,
-    draft_content: JSON.stringify({
-      type: "draft", id: util.uuid(), min_version: draftVersion, min_features: ["AIGC_Video_UnifiedEdit"],
-      is_from_tsn: true, version: draftVersion, main_component_id: componentId,
-      component_list: [{
-        type: "video_base_component", id: componentId, min_version: "1.0.0", aigc_mode: "workbench",
-        metadata: { type: "", id: util.uuid(), created_platform: 3, created_platform_version: "", created_time_in_ms: String(Date.now()), created_did: "" },
-        generate_type: "gen_video",
-        abilities: {
-          type: "", id: util.uuid(),
-          gen_video: {
-            type: "", id: util.uuid(),
-            text_to_video_params: {
-              type: "", id: util.uuid(),
-              video_gen_inputs: [{
-                type: "", id: util.uuid(), min_version: draftVersion, prompt: "", video_mode: 2, fps: 24,
-                duration_ms: actualDuration * 1000, idip_meta_list: [],
-                unified_edit_input: { type: "", id: util.uuid(), material_list: materialList, meta_list: metaList },
-              }],
-              video_aspect_ratio: aspectRatio, seed: Math.floor(Math.random() * 1000000000),
-              model_req_key: model, priority: 0,
-            },
-            video_task_extra: metricsExtra,
-          },
-        },
-        process_type: 1,
-      }],
-    }),
-    http_common_info: { aid: CORE_ASSISTANT_ID },
-  };
-
-  const generateResult = await browserService.fetch(token, generateUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(generateBody),
-  });
-
-  const { ret, errmsg, data: generateData } = generateResult;
-  if (ret !== undefined && Number(ret) !== 0) {
-    if (Number(ret) === 5000) throw new APIException(EX.API_IMAGE_GENERATION_INSUFFICIENT_POINTS, `积分不足: ${errmsg}`);
-    throw new APIException(EX.API_REQUEST_FAILED, `请求失败: ${errmsg}`);
-  }
-  const aigc_data = generateData?.aigc_data || generateResult.aigc_data;
-  const historyId = aigc_data?.history_record_id;
-  if (!historyId) throw new APIException(EX.API_IMAGE_GENERATION_FAILED, "记录ID不存在");
-
-  logger.info(`Seedance 任务提交成功，historyId: ${historyId}`);
-  return historyId;
+  return submitSeedanceRequest(_model, prompt, options, refreshToken);
 }
 
 /**
