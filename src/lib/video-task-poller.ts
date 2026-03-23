@@ -6,8 +6,10 @@ import logger from "@/lib/logger.ts";
 import {
   getActiveTasks,
   updateTaskStatus,
+  updateTaskCompleted,
 } from "@/lib/video-task-db.ts";
 import { queryVideoTaskStatus } from "@/api/controllers/videos.ts";
+import { generateCookie } from "@/api/controllers/core.ts";
 
 // 每次 poll 成功执行后更新此时间戳
 let lastPollAt: number = Date.now();
@@ -21,10 +23,24 @@ export function isPollerHealthy(): boolean {
   return Date.now() - lastPollAt < 90_000;
 }
 
+/** 根据文件系统确定最终文件路径（自增序号直到不存在） */
+function resolveVideoFilePath(saveDir: string, namePrefix: string): string {
+  for (let seq = 1; seq <= 999; seq++) {
+    const filename = `${namePrefix}_${String(seq).padStart(2, "0")}.mp4`;
+    const fullPath = path.join(saveDir, filename);
+    if (!fs.existsSync(fullPath)) return fullPath;
+  }
+  return path.join(saveDir, `${namePrefix}_${Date.now()}.mp4`);
+}
+
 /** 下载视频文件到指定路径 */
-async function downloadVideo(videoUrl: string, savePath: string): Promise<void> {
+async function downloadVideo(videoUrl: string, savePath: string, refreshToken: string): Promise<void> {
   await fs.ensureDir(path.dirname(savePath));
-  const response = await axios.get(videoUrl, { responseType: "stream", timeout: 5 * 60 * 1000 });
+  const response = await axios.get(videoUrl, {
+    responseType: "stream",
+    timeout: 5 * 60 * 1000,
+    headers: { Cookie: generateCookie(refreshToken) },
+  });
   await new Promise<void>((resolve, reject) => {
     const writer = fs.createWriteStream(savePath);
     response.data.pipe(writer);
@@ -82,9 +98,11 @@ async function pollActiveTasks(): Promise<void> {
 
       if (result.videoUrl) {
         try {
-          await downloadVideo(result.videoUrl, task.save_path);
-          updateTaskStatus(task.task_id, "completed");
-          logger.info(`[Poller] 任务 ${task.task_id} 完成，视频已保存: ${task.save_path}`);
+          const finalPath = resolveVideoFilePath(task.save_path, task.video_name);
+          const finalName = path.basename(finalPath);
+          await downloadVideo(result.videoUrl, finalPath, task.refresh_token);
+          updateTaskCompleted(task.task_id, finalName, finalPath);
+          logger.info(`[Poller] 任务 ${task.task_id} 完成，视频已保存: ${finalPath}`);
         } catch (downloadErr) {
           updateTaskStatus(task.task_id, "failed", `视频下载失败: ${downloadErr.message}`);
           logger.error(`[Poller] 任务 ${task.task_id} 视频下载失败: ${downloadErr.message}`);

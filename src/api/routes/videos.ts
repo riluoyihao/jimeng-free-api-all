@@ -207,8 +207,8 @@ export default {
             // 生成视频名（自动去重）
             const video_name = generateVideoName(episode, video_number, title);
 
-            // 完整保存路径：parentpath + save_path + video_name
-            const full_save_path = path.join(parentpath, save_path, video_name);
+            // 视频保存目录：parentpath + save_path（文件名在下载时确定）
+            const save_dir = path.join(parentpath, save_path);
 
             // dry_run 模式：只返回组装好的参数，不调用即梦 API 也不写数据库
             if (dry_run) {
@@ -223,7 +223,7 @@ export default {
                     resolution,
                     duration: finalDuration,
                     video_name,
-                    full_save_path,
+                    save_dir,
                     files: files.map((f: { filepath: string; originalFilename: string; mimetype: string }) => ({
                         filepath: f.filepath,
                         originalFilename: f.originalFilename,
@@ -259,10 +259,10 @@ export default {
                 );
             }
 
-            // 写入数据库
+            // 写入数据库（video_name 存前缀，save_path 存目录，文件名下载时确定）
             const task = insertTask({
                 video_name,
-                save_path: full_save_path,
+                save_path: save_dir,
                 history_id: historyId,
                 refresh_token: token,
             });

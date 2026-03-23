@@ -6,8 +6,6 @@ import logger from "@/lib/logger.ts";
 
 const DB_PATH = path.join(path.resolve(), "data", "tasks.db");
 
-const MAX_NAME_SEQUENCE = 999;
-
 export type TaskStatus = "pending" | "running" | "completed" | "failed";
 
 export interface VideoTask {
@@ -49,17 +47,10 @@ export function initDb(): void {
   logger.info(`SQLite 初始化完成: ${DB_PATH}`);
 }
 
-/** 生成视频文件名，同名自增序号 */
-export function generateVideoName(episode: number, videoNumber: number, title: string): string {
-  const base = `EP${episode}_video${videoNumber}_${title}`;
-  let index = 1;
-  while (index <= MAX_NAME_SEQUENCE) {
-    const name = `${base}_${String(index).padStart(2, "0")}.mp4`;
-    const row = getDb().prepare("SELECT 1 FROM video_tasks WHERE video_name = ?").get(name);
-    if (!row) return name;
-    index++;
-  }
-  return `${base}_${Date.now()}.mp4`;
+/** 生成视频名称前缀（不含序号），下载时再根据文件系统确定最终文件名 */
+export function generateVideoName(episode: string | number, videoNumber: string | number, title: string): string {
+  const episodePart = typeof episode === 'number' ? `EP${episode}` : episode;
+  return `${episodePart}_video${videoNumber}_${title}`;
 }
 
 export function insertTask(params: {
@@ -91,13 +82,14 @@ export function updateTaskHistoryId(task_id: string, history_id: string): void {
 }
 
 export function updateTaskStatus(task_id: string, status: TaskStatus, error?: string): void {
-  if (status === "completed") {
-    getDb().prepare("UPDATE video_tasks SET status = ?, error = ?, completed_at = ? WHERE task_id = ?")
-      .run(status, error || null, Math.floor(Date.now() / 1000), task_id);
-  } else {
-    getDb().prepare("UPDATE video_tasks SET status = ?, error = ? WHERE task_id = ?")
-      .run(status, error || null, task_id);
-  }
+  getDb().prepare("UPDATE video_tasks SET status = ?, error = ? WHERE task_id = ?")
+    .run(status, error || null, task_id);
+}
+
+/** 任务下载完成，更新最终文件名、完整路径和状态 */
+export function updateTaskCompleted(task_id: string, video_name: string, save_path: string): void {
+  getDb().prepare("UPDATE video_tasks SET status = 'completed', video_name = ?, save_path = ?, completed_at = ? WHERE task_id = ?")
+    .run(video_name, save_path, Math.floor(Date.now() / 1000), task_id);
 }
 
 const TASK_COLUMNS = "task_id, history_id, video_name, save_path, status, error, created_at, completed_at";
