@@ -37,7 +37,7 @@ const MODEL_DRAFT_VERSIONS: { [key: string]: string } = {
 const MODEL_MAP = {
   "jimeng-video-3.5-pro": "dreamina_ic_generate_video_model_vgfm_3.5_pro",
   "jimeng-video-3.0-pro": "dreamina_ic_generate_video_model_vgfm_3.0_pro",
-  "jimeng-video-3.0": "dreamina_ic_generate_video_model_vgfm_3.0",
+  "jimeng-video-3.0": "dreamina_ic_generate_video_model_vgfm_3.0_fast",
   // Seedance 多图智能视频生成模型（jimeng-video-seedance-2.0 为上游标准名称）
   "jimeng-video-seedance-2.0": "dreamina_seedance_40_pro",
   "seedance-2.0": "dreamina_seedance_40_pro",
