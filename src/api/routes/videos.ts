@@ -153,7 +153,7 @@ export default {
                 storyboard_path,
                 parentpath,
                 save_path,
-                model = 'jimeng-video-seedance-2.0',
+                model = 'jimeng-video-seedance-2.0-vip',
                 resolution = '720p',
                 dry_run = false,
             } = request.body;
