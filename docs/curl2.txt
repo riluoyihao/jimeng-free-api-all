@@ -1,0 +1,405 @@
+fetch("https://mssdk-sg.capcutapi.com/web/report?msToken=dFcJLYF_r3akUmztciHWJzZ8-SPMOk_WJmpw6QODQ9dpPPI4ZChiPMa3XwdlJI0tgilzUzyaXeEF95vjSzC_6ucjTkOwlSYRgbVOWjI6FVpAsu6IvMoBdvNN81oRfUvKbC7HbA==&X-Bogus=DFSzswjYkBC/NguQCqif9IXFhsoY&X-Gnarly=M5QZP6Ex6FJEHm128a22v-eIOtQ/oRp7AuPTmQbmPJYG0WzA1MIZLJd/-1YsBmA1sV9qIwQdHlNtVswnl4lbQuTpyBdS7/VQqK-BPKZ5Uce-I95s/Yl8bfvGC1/dyZjegpfweZBb3PJsupwTASWDQILs-Of4XfJ-IsEnQANwMHpSQPThbP/uGWDjOEGoU/CpNufDx-7IgxZ0OmwFSVA5UVenoY2gpTMm9sCPTlZ7Cm3yR/bvFcSAupEfV/J3CDKE-I6lueowl7p2", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "text/plain;charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "sec-fetch-storage-access": "active",
+    "cookie": "msToken=dFcJLYF_r3akUmztciHWJzZ8-SPMOk_WJmpw6QODQ9dpPPI4ZChiPMa3XwdlJI0tgilzUzyaXeEF95vjSzC_6ucjTkOwlSYRgbVOWjI6FVpAsu6IvMoBdvNN81oRfUvKbC7HbA==",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"magic\":538969122,\"version\":1,\"dataType\":8,\"strData\":\"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\",\"tspFromClient\":1775015094560}",
+  "method": "POST"
+}); ;
+fetch("https://www.google-analytics.com/g/collect?v=2&tid=G-F8PY8CNX7V&gtm=45je63u0v9230789449za20gzb9232496426zd9232496426&_p=1775015089217&gcs=G111&gcd=13t3t3t3t5l1&npa=0&dma=0&cid=263983768.1774942387&ul=zh-cn&sr=1680x1050&uaa=x86&uab=64&uafvl=Chromium%3B135.0.7049.72%7CNot-A.Brand%3B8.0.0.0&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&are=1&frm=0&pscdl=noapi&_eu=AEAAAAQ&_s=2&tag_exp=0~115938465~115938468~116133313~116991817~117266401~117384405&sid=1775014435&sct=4&seg=1&dl=https%3A%2F%2Fdreamina.capcut.com%2Fai-tool%2Fgenerate%3Ftype%3Dvideo%26workspace%3D0&dt=Dreamina%3A%20Create%20realistic%20talking%20avatars%20with%20AI%20avatar%20generator&en=scroll&epn.percent_scrolled=90&_et=13&tfd=8575", {
+  "headers": {
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"vip_function_details\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"show\\\",\\\"enter_source\\\":\\\"generate_task_hover_tool_bar\\\",\\\"right_id\\\":\\\"video_upscale\\\",\\\"right_type\\\":\\\"generate_video\\\",\\\"right_main_type\\\":\\\"aigc\\\",\\\"right_is_aigc\\\":\\\"1\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"duration\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_only\\\",\\\"right_is_trial\\\":\\\"0\\\",\\\"right_trial_mode\\\":\\\"non_trial\\\",\\\"right_trial_type\\\":\\\"non_trial\\\",\\\"right_trial_limit_left\\\":\\\"non_trial\\\",\\\"event_index\\\":1775015786282}\",\"local_time_ms\":1775015095049,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"},{\"event\":\"vip_function_details\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"show\\\",\\\"enter_source\\\":\\\"generate_task_hover_tool_bar\\\",\\\"right_id\\\":\\\"video_frame_interpolation\\\",\\\"right_type\\\":\\\"generate_video\\\",\\\"right_main_type\\\":\\\"aigc\\\",\\\"right_is_aigc\\\":\\\"1\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"duration\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_only\\\",\\\"right_is_trial\\\":\\\"0\\\",\\\"right_trial_mode\\\":\\\"non_trial\\\",\\\"right_trial_type\\\":\\\"non_trial\\\",\\\"right_trial_limit_left\\\":\\\"non_trial\\\",\\\"event_index\\\":1775015786281}\",\"local_time_ms\":1775015095049,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015095,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://dreamina.capcut.com/passport/web/account/info/?aid=513641&account_sdk_source=web&sdk_version=2.1.10-tiktok&language=zh-Hant-TW&verifyFp=verify_mnfd0bdk_LIRQap2I_XfpL_46Vz_BWNm_bXHNi6zDwmUW", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "appid": "513641",
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "did": "7623319468606047745",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "store-country-code": "sg",
+    "store-country-code-src": "uid",
+    "x-tt-passport-csrf-token": "3758e36cef2f81a3274370278478b763",
+    "cookie": "capcut_locale=zh-Hant-TW; g_state={\"i_l\":0,\"i_ll\":1774942385411,\"i_b\":\"oequ2ic7HEVncxkqRIlelvsLoI6HxY4HtepE+EaHA7g\",\"i_e\":{\"enable_itp_optimization\":0}}; _ga=GA1.1.263983768.1774942387; _tea_web_id=7623319468606047745; _ga_R13M7NJQ9S=GS2.1.s1774942386$o1$g0$t1774942391$j55$l0$h0; _isCommercialFreemiumStage=0; fpk1=397e6096120be7cdef6d58853b5aa877faa4bd76a8ad0f3d5d7129327ef55c4286d35b0324b49982da2bb3967a62b3ab; passport_csrf_token=3758e36cef2f81a3274370278478b763; passport_csrf_token_default=3758e36cef2f81a3274370278478b763; sid_guard=e370da3d625dec471fe2d4e2b0a8e752%7C1774949694%7C5184000%7CSat%2C+30-May-2026+09%3A34%3A54+GMT; uid_tt=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; uid_tt_ss=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; sid_tt=e370da3d625dec471fe2d4e2b0a8e752; sessionid=e370da3d625dec471fe2d4e2b0a8e752; sessionid_ss=e370da3d625dec471fe2d4e2b0a8e752; tt_session_tlb_tag=sttt%7C4%7C43DaPWJd7Ecf4tTisKjnUv________-1Pa3ZzPd2OtSAs57R4zCF59oYIknqXCK3Job5VNhknIA%3D; sid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; ssid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; store-idc=alisg; store-country-code=sg; store-country-code-src=uid; cc-target-idc=alisg; tt-target-idc-sign=sS_lN8lHgu2outirZTOXwlfp3hF72dau-bpucs-7G17xKRchGRzxYvajcPi4FX500v-BKa0giQZggePwP5R_7Q9F_MB0g_8KXMszPzng2qE2GgdUhMw-IbK4WwWFb70lAo2Rp0xcxPFWw5n236RBMSUpUgSLn0uOkdeSYJJQL9mtC9f19A_N1KSsDK3KRbPjxuZBpcYPFsuUxL0YXHWm9QMxUa-9HltkdY3Ax_tfYLfTxJ8-FW6vbweONBneKvvvD6n4yCNYoRiKlUMEUd5ea73fxduWE4nfQq1f4XOMCHN-ohGnsfEgNOKGLTgp7fwkUqzVeUnY9SJPfG_DAfGVy_TgwYH6tBj-DKOrfuyO3RwsxAtEG-XIQ9yFkjf-TKktRp4nLqEOUG_qltLL2GJ1KAWKpCCf-c5PbHLBzLKH1AEa_nqZqASyHatAVjk6pn8Ju7KSrc8cnaWdcj6uVw6Ja5RPvC1DueE4r6zgdlBoi3zE3GoPjZICrhImIXSSqc6j; DREAMINA_THEME=light; s_v_web_id=verify_mnfd0bdk_LIRQap2I_XfpL_46Vz_BWNm_bXHNi6zDwmUW; ttwid=1|DbMGoxWXkFbL44Nqbp8uDRupdZsep5kyQyRR0FOuOUU|1775015088|21f8783ce403d55df2a1aebc5b726b91421f0b65bb18cd4cb5b499825c0bd00f; store-country-sign=MEIEDF3C5BiI8e1ifv__5gQgjkP8kRWlBlil_vAwOl7bYcNKuCkOEFz-9C_W5baQHgwEEH8CALcgOAdsG6hwduLSfqk; odin_tt=eb42671ae90d57a7c4aa371667d849530c5a62fbef310fac1c34ea50a395105a8b347d5a6bc232fcd29ec36504d0abd1863da1e7e13229ab049c44eeba1b99c8; _ga_F8PY8CNX7V=GS2.1.s1775014435$o4$g1$t1775015089$j30$l0$h0; msToken=tDi0oKyTgpoXveeBhNBg2tCs0aHPuUjItzsfoxAYUfQvnl-cKSmXA2IAZlgatneSBoZle2LRxwkC8FgULR7YL3Nah0-IqyfudR2atKqih-SUoAkIHc_Wq38VONL_; msToken=lyk-M3RDmKgLJZcA2EI3C2Dki7BGduw6uWiYh0GgHlgEN9InaCDpp7qM500ZLnmmfSSqWdbJpnnOEVLE74h2PoEwQjFb1YRccmYmZohXmm6-5XEi-Qi10khL6058nV87Qsb2BA==",
+    "Referer": "https://dreamina.capcut.com/ai-tool/generate?type=video&workspace=0",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+}); ;
+fetch("https://mssdk-sg.capcutapi.com/web/report?msToken=lyk-M3RDmKgLJZcA2EI3C2Dki7BGduw6uWiYh0GgHlgEN9InaCDpp7qM500ZLnmmfSSqWdbJpnnOEVLE74h2PoEwQjFb1YRccmYmZohXmm6-5XEi-Qi10khL6058nV87Qsb2BA==&X-Bogus=DFSzswjurb5HJIasCqify9XFhsL3&X-Gnarly=MRyOxBvTxvpNY2ySMHiT7Os90f7oHoeyKBQnUpht4iNw6BcV/xsoo49SbwosCY8N7fzSAszD8-8NDt4y-0e7mu8tgpkYxdU9S/O5UMwDakniYGFsnMb1rvx29kIp321gppbOJFSpigAxWEHX4TB7DAIx4Iz5PGXkAcvShN-dTq4cQiPtns5N3ItzIcpxKNSgcJ7We8D1QDo-HqhFzlZAiBPCTOx7QVXbtM5jhbaWsPcZBESFq7fcksTGbnUJBQhQ1ZpZj/RDQZBU", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "text/plain;charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "sec-fetch-storage-access": "active",
+    "cookie": "msToken=lyk-M3RDmKgLJZcA2EI3C2Dki7BGduw6uWiYh0GgHlgEN9InaCDpp7qM500ZLnmmfSSqWdbJpnnOEVLE74h2PoEwQjFb1YRccmYmZohXmm6-5XEi-Qi10khL6058nV87Qsb2BA==",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"magic\":538969122,\"version\":1,\"dataType\":8,\"strData\":\"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\",\"tspFromClient\":1775015100489}",
+  "method": "POST"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"vip_function_details\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"show\\\",\\\"enter_source\\\":\\\"task_detail_page_right_tool_panel\\\",\\\"right_id\\\":\\\"seedance_20_fast_720p_output\\\",\\\"right_type\\\":\\\"generate_video\\\",\\\"right_main_type\\\":\\\"aigc\\\",\\\"right_is_aigc\\\":\\\"1\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"duration\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_before_credits\\\",\\\"right_is_trial\\\":\\\"1\\\",\\\"right_trial_mode\\\":\\\"times_trial\\\",\\\"right_trial_type\\\":\\\"limit_times\\\",\\\"right_trial_limit_left\\\":\\\"\\\",\\\"event_index\\\":1775015786285}\",\"local_time_ms\":1775015100604,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"},{\"event\":\"vip_function_details\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"show\\\",\\\"enter_source\\\":\\\"task_detail_page_right_tool_panel\\\",\\\"right_id\\\":\\\"video_upscale\\\",\\\"right_type\\\":\\\"generate_video\\\",\\\"right_main_type\\\":\\\"aigc\\\",\\\"right_is_aigc\\\":\\\"1\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"duration\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_only\\\",\\\"right_is_trial\\\":\\\"0\\\",\\\"right_trial_mode\\\":\\\"non_trial\\\",\\\"right_trial_type\\\":\\\"non_trial\\\",\\\"right_trial_limit_left\\\":\\\"non_trial\\\",\\\"event_index\\\":1775015786284}\",\"local_time_ms\":1775015100604,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"},{\"event\":\"vip_function_details\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"show\\\",\\\"enter_source\\\":\\\"task_detail_page_right_tool_panel\\\",\\\"right_id\\\":\\\"video_frame_interpolation\\\",\\\"right_type\\\":\\\"generate_video\\\",\\\"right_main_type\\\":\\\"aigc\\\",\\\"right_is_aigc\\\":\\\"1\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"duration\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_only\\\",\\\"right_is_trial\\\":\\\"0\\\",\\\"right_trial_mode\\\":\\\"non_trial\\\",\\\"right_trial_type\\\":\\\"non_trial\\\",\\\"right_trial_limit_left\\\":\\\"non_trial\\\",\\\"event_index\\\":1775015786283}\",\"local_time_ms\":1775015100603,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015100,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://p19-dreamina-sign-sg.ibyteimg.com/tos-alisg-i-wopfjsm1ax-sg/9938daa32a984d17b81d6fcfb67200cf~tplv-wopfjsm1ax-resize:360:229.webp?lk3s=8e790bc3&x-expires=1806551090&x-signature=AXKzLGDvrLTrv0LFQLMn8x4n9I0%3D", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"vip_function_details\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"show\\\",\\\"enter_source\\\":\\\"remove_watermark_detailed_download\\\",\\\"right_id\\\":\\\"remove_watermark\\\",\\\"right_type\\\":\\\"remove_watermark\\\",\\\"right_main_type\\\":\\\"function\\\",\\\"right_is_aigc\\\":\\\"0\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"times\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_only\\\",\\\"right_is_trial\\\":\\\"0\\\",\\\"right_trial_mode\\\":\\\"non_trial\\\",\\\"right_trial_type\\\":\\\"non_trial\\\",\\\"right_trial_limit_left\\\":\\\"non_trial\\\",\\\"event_index\\\":1775015786287}\",\"local_time_ms\":1775015102735,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"},{\"event\":\"vip_exclusive_honer\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"show\\\",\\\"enter_source\\\":\\\"remove_watermark_detailed_download\\\",\\\"user_trial_type\\\":\\\"multi_discount\\\",\\\"user_trial_days\\\":7,\\\"user_trial_price\\\":0,\\\"is_freetrial\\\":0,\\\"vip_right_trial_type\\\":\\\"non_trial\\\",\\\"need_vip_level\\\":\\\"standard\\\",\\\"vip_right_subscribe_type\\\":\\\"standard\\\",\\\"vip_function_name\\\":\\\"remove_watermark\\\",\\\"task_type\\\":\\\"video\\\",\\\"right_id\\\":\\\"remove_watermark\\\",\\\"right_type\\\":\\\"remove_watermark\\\",\\\"right_main_type\\\":\\\"function\\\",\\\"right_is_aigc\\\":\\\"0\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"times\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_only\\\",\\\"right_is_trial\\\":\\\"0\\\",\\\"right_trial_mode\\\":\\\"non_trial\\\",\\\"right_trial_type\\\":\\\"non_trial\\\",\\\"right_trial_limit_left\\\":\\\"non_trial\\\",\\\"event_index\\\":1775015786286}\",\"local_time_ms\":1775015102735,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015102,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://mweb-api-sg.capcut.com/mweb/v1/get_local_item_list?aid=513641&web_version=7.5.0&da_version=3.3.12&aigc_features=app_lip_sync&msToken=P8UgAFfaKiZlWF00FQw8m8vr50D8cQa0cSPR5uStVpFR6d7StUraAJI5S3ksaUEpXc4OG5K9lheUp4dTBkUcF4nWe2_rIpcqK6newVjHKyknHjiI4jNzVbuKulBA5BIbH7dt7g==&X-Bogus=DFSzswjuxbL7G4asCqify4XFhsor&X-Gnarly=MxgJPmrOQrojfd-YYPCwN6onnrFTV61pdnwh6oO/7429jbfDCwoiEzZJsSL-lJl2EGHQzREXA9mB6RjlaZ7GGiCG4x7hzeSM4hFXkxTNt4xy0T4mQMrYjb5dpPlOuiKmEG1baQfnaAzDnhh4eluFaENURB9aJhMGIaLu2RvmEsOIi2aw7oOrytUv91zK1zs7vgr/T/eW9syVV-O-PhVN8s4bsghzfBQchwk1cz8eGLZgjCOeP71FnWd9YGPeXoqbIv59KAwFyF7-", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "app-sdk-version": "48.0.0",
+    "appid": "513641",
+    "appvr": "8.4.0",
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "device-time": "1775015103",
+    "did": "7623319468606047745",
+    "lan": "zh-Hant-TW",
+    "loc": "SG",
+    "pf": "7",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "sign": "f6e0b24a9c7625b95c89826d9ede02e9",
+    "sign-ver": "1",
+    "store-country-code": "sg",
+    "store-country-code-src": "uid",
+    "tdid": "",
+    "cookie": "_ga=GA1.1.263983768.1774942387; _ga_R13M7NJQ9S=GS2.1.s1774942386$o1$g0$t1774942391$j55$l0$h0; uifid_temp=2aebf5a9591cd10f038f9f944266eeec3d826e220d6d68ab20dcda29ce6bdc1bbc9a15c49d002d0bd7f92722f7d058af72d8609ca9d27d65ebcda7fa6280c4fb6f3d63dbfa917c3a926283f58f726c0a; passport_csrf_token=3758e36cef2f81a3274370278478b763; passport_csrf_token_default=3758e36cef2f81a3274370278478b763; dm_auid=PZGFs9meJoLywvA1elCuMR11+CEK0Huafkat8IsCR9M=; sid_guard=e370da3d625dec471fe2d4e2b0a8e752%7C1774949694%7C5184000%7CSat%2C+30-May-2026+09%3A34%3A54+GMT; uid_tt=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; uid_tt_ss=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; sid_tt=e370da3d625dec471fe2d4e2b0a8e752; sessionid=e370da3d625dec471fe2d4e2b0a8e752; sessionid_ss=e370da3d625dec471fe2d4e2b0a8e752; tt_session_tlb_tag=sttt%7C4%7C43DaPWJd7Ecf4tTisKjnUv________-1Pa3ZzPd2OtSAs57R4zCF59oYIknqXCK3Job5VNhknIA%3D; sid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; ssid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; store-idc=alisg; store-country-code=sg; store-country-code-src=uid; cc-target-idc=alisg; tt-target-idc-sign=sS_lN8lHgu2outirZTOXwlfp3hF72dau-bpucs-7G17xKRchGRzxYvajcPi4FX500v-BKa0giQZggePwP5R_7Q9F_MB0g_8KXMszPzng2qE2GgdUhMw-IbK4WwWFb70lAo2Rp0xcxPFWw5n236RBMSUpUgSLn0uOkdeSYJJQL9mtC9f19A_N1KSsDK3KRbPjxuZBpcYPFsuUxL0YXHWm9QMxUa-9HltkdY3Ax_tfYLfTxJ8-FW6vbweONBneKvvvD6n4yCNYoRiKlUMEUd5ea73fxduWE4nfQq1f4XOMCHN-ohGnsfEgNOKGLTgp7fwkUqzVeUnY9SJPfG_DAfGVy_TgwYH6tBj-DKOrfuyO3RwsxAtEG-XIQ9yFkjf-TKktRp4nLqEOUG_qltLL2GJ1KAWKpCCf-c5PbHLBzLKH1AEa_nqZqASyHatAVjk6pn8Ju7KSrc8cnaWdcj6uVw6Ja5RPvC1DueE4r6zgdlBoi3zE3GoPjZICrhImIXSSqc6j; ttwid=1|DbMGoxWXkFbL44Nqbp8uDRupdZsep5kyQyRR0FOuOUU|1775015088|21f8783ce403d55df2a1aebc5b726b91421f0b65bb18cd4cb5b499825c0bd00f; odin_tt=eb42671ae90d57a7c4aa371667d849530c5a62fbef310fac1c34ea50a395105a8b347d5a6bc232fcd29ec36504d0abd1863da1e7e13229ab049c44eeba1b99c8; _ga_F8PY8CNX7V=GS2.1.s1775014435$o4$g1$t1775015089$j30$l0$h0; msToken=tDi0oKyTgpoXveeBhNBg2tCs0aHPuUjItzsfoxAYUfQvnl-cKSmXA2IAZlgatneSBoZle2LRxwkC8FgULR7YL3Nah0-IqyfudR2atKqih-SUoAkIHc_Wq38VONL_; store-country-sign=MEIEDHbYBQ0JN7iwSg8z0gQgdRHyVShOq5qw7BHlGV6YL57uu1HSHl6ap0kTzxULs3IEEEtUg-Yu0BHAPxnz2qFc0Bg",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"item_id_list\":[\"7623627365305961745\"],\"pack_item_opt\":{\"scene\":1,\"need_data_integrity\":true},\"is_for_video_download\":true}",
+  "method": "POST"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"ai_video_result_action\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"action\\\":\\\"download\\\",\\\"position\\\":\\\"work_collection_detail\\\",\\\"prompt\\\":\\\"\\\",\\\"resolution\\\":\\\"1280 * 720\\\",\\\"seed\\\":\\\"3116626725\\\",\\\"is_freetrial\\\":0,\\\"vip_right_trial_type\\\":\\\"non_trial\\\",\\\"page_view_type\\\":\\\"standard\\\",\\\"prompt_cnt\\\":0,\\\"image_prompt_cnt\\\":0,\\\"prompt_source\\\":\\\"custom\\\",\\\"gen_mode\\\":\\\"t2v\\\",\\\"model_name\\\":\\\"Dreamina Seedance 2.0 Fast\\\",\\\"model_key\\\":\\\"dreamina_seedance_40\\\",\\\"model_starling_key\\\":\\\"video_seedance_2_fast_name\\\",\\\"generate_mode\\\":\\\"标准模式\\\",\\\"is_first_relaxed_generate\\\":0,\\\"is_from_preview\\\":0,\\\"is_quick_preview\\\":0,\\\"is_preset\\\":0,\\\"is_relaxed_generate\\\":0,\\\"magic_box_cnt\\\":0,\\\"is_voice_clone\\\":0,\\\"frame_interpolation_cnt\\\":0,\\\"upscale_cnt\\\":0,\\\"add_more_cnt\\\":0,\\\"enter_from\\\":\\\"click\\\",\\\"aspect_ratio\\\":\\\"16:9\\\",\\\"function_mode\\\":\\\"omni_reference\\\",\\\"description_cnt\\\":0,\\\"is_add_temp_subject\\\":1,\\\"is_add_subject\\\":0,\\\"frame_rate\\\":\\\"24\\\",\\\"original_resolution\\\":\\\"1280 * 720\\\",\\\"original_frame_rate\\\":\\\"24\\\",\\\"generate_type\\\":10,\\\"submit_id\\\":\\\"c8ca7d21-0912-4e59-9ea2-e0074510dce6\\\",\\\"task_id\\\":\\\"c8ca7d21-0912-4e59-9ea2-e0074510dce6\\\",\\\"local_item_id\\\":\\\"7623627365305961745\\\",\\\"action_type\\\":\\\"generate\\\",\\\"is_default_seed\\\":1,\\\"video_duration\\\":5,\\\"video_id\\\":\\\"20861153449220\\\",\\\"is_agent_mode\\\":0,\\\"event_index\\\":1775015786288}\",\"local_time_ms\":1775015103263,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015103,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://v16-cc.capcut.com/b316656fbf3339cd32483d2f21b2a639/69d5cf46/video/tos/alisg/tos-alisg-ve-14178-sg/o4wME0Dw5jxi7kD9AGEASymfBylwhiIBQOoA6k/?a=513641&bti=PDk6QC0yM2A%3D&&bt=4802&ft=GAAO2Inz7ThlOVOPXq8Zmo&mime_type=video_mp4&rc=OzhkZzo0ZzszN2ZoaDk8N0BpM2w7Zmw5cjM8OjYzODU6NEA2NWAwNGFjXmAxYDIzLzMyYSNxcGJsMmRzMzNhLS1kMy1zcw%3D%3D&vvpl=1&l=202604011145051F955AF606A69571C187&btag=e000b0000", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+}); ;
+fetch("https://commerce-api-sg.capcut.com/commerce/v3/resource/benefit_metadata?aid=513641&web_version=7.5.0&da_version=3.3.12&aigc_features=app_lip_sync&msToken=P8UgAFfaKiZlWF00FQw8m8vr50D8cQa0cSPR5uStVpFR6d7StUraAJI5S3ksaUEpXc4OG5K9lheUp4dTBkUcF4nWe2_rIpcqK6newVjHKyknHjiI4jNzVbuKulBA5BIbH7dt7g==&X-Bogus=DFSzswjuxbbA7IasCqifP9XFhsqU&X-Gnarly=M5vnpMjBbKsZjqAARx80cNndBz7P4j67AI7CpLNIf-uRThsJr8a6dKyJvCTxCl0Twx1BRuH34i/7GSVdFnTztEkh8QnniLDaXpXjlY4XnCRO/EtT64ZY9Z1eUE3GL7TCOHgimQlY7hXgch1U0oN/g-fCziIYrpYwMEvXgxQ6Ht29S5lOk8x3a1ynIFrqTgF0cHRMqeIA-4sC0jFp0baBPjQP-hCDln919QnHDh-NBSem5qIO0fI41GExgndpwKWRoCMMolK94mjk", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "app-sdk-version": "48.0.0",
+    "appid": "513641",
+    "appvr": "8.4.0",
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "device-time": "1775015104",
+    "did": "7623319468606047745",
+    "lan": "zh-Hant-TW",
+    "loc": "SG",
+    "pf": "7",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "sign": "d5cf70b34f54e6dfcd4fa2f0941fae91",
+    "sign-ver": "1",
+    "store-country-code": "sg",
+    "store-country-code-src": "uid",
+    "tdid": "",
+    "cookie": "_ga=GA1.1.263983768.1774942387; _ga_R13M7NJQ9S=GS2.1.s1774942386$o1$g0$t1774942391$j55$l0$h0; passport_csrf_token=3758e36cef2f81a3274370278478b763; passport_csrf_token_default=3758e36cef2f81a3274370278478b763; sid_guard=e370da3d625dec471fe2d4e2b0a8e752%7C1774949694%7C5184000%7CSat%2C+30-May-2026+09%3A34%3A54+GMT; uid_tt=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; uid_tt_ss=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; sid_tt=e370da3d625dec471fe2d4e2b0a8e752; sessionid=e370da3d625dec471fe2d4e2b0a8e752; sessionid_ss=e370da3d625dec471fe2d4e2b0a8e752; tt_session_tlb_tag=sttt%7C4%7C43DaPWJd7Ecf4tTisKjnUv________-1Pa3ZzPd2OtSAs57R4zCF59oYIknqXCK3Job5VNhknIA%3D; sid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; ssid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; store-idc=alisg; store-country-code=sg; store-country-code-src=uid; cc-target-idc=alisg; tt-target-idc-sign=sS_lN8lHgu2outirZTOXwlfp3hF72dau-bpucs-7G17xKRchGRzxYvajcPi4FX500v-BKa0giQZggePwP5R_7Q9F_MB0g_8KXMszPzng2qE2GgdUhMw-IbK4WwWFb70lAo2Rp0xcxPFWw5n236RBMSUpUgSLn0uOkdeSYJJQL9mtC9f19A_N1KSsDK3KRbPjxuZBpcYPFsuUxL0YXHWm9QMxUa-9HltkdY3Ax_tfYLfTxJ8-FW6vbweONBneKvvvD6n4yCNYoRiKlUMEUd5ea73fxduWE4nfQq1f4XOMCHN-ohGnsfEgNOKGLTgp7fwkUqzVeUnY9SJPfG_DAfGVy_TgwYH6tBj-DKOrfuyO3RwsxAtEG-XIQ9yFkjf-TKktRp4nLqEOUG_qltLL2GJ1KAWKpCCf-c5PbHLBzLKH1AEa_nqZqASyHatAVjk6pn8Ju7KSrc8cnaWdcj6uVw6Ja5RPvC1DueE4r6zgdlBoi3zE3GoPjZICrhImIXSSqc6j; ttwid=1|DbMGoxWXkFbL44Nqbp8uDRupdZsep5kyQyRR0FOuOUU|1775015088|21f8783ce403d55df2a1aebc5b726b91421f0b65bb18cd4cb5b499825c0bd00f; odin_tt=eb42671ae90d57a7c4aa371667d849530c5a62fbef310fac1c34ea50a395105a8b347d5a6bc232fcd29ec36504d0abd1863da1e7e13229ab049c44eeba1b99c8; _ga_F8PY8CNX7V=GS2.1.s1775014435$o4$g1$t1775015089$j30$l0$h0; store-country-sign=MEIEDHbYBQ0JN7iwSg8z0gQgdRHyVShOq5qw7BHlGV6YL57uu1HSHl6ap0kTzxULs3IEEEtUg-Yu0BHAPxnz2qFc0Bg; msToken=suXJttI9GJr2Kia9gMqFRw2W4jPDdYuPO1fYyH7v7_ewENpU9FF_OVGHC2Vy-OWx4yp0fuVif1uveI4Z4xMoMyujkizHj9sg92t0K-Y2FDGZ8CG_klOKWbge3zLStkAstePtGg==",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"query_list\":[{\"resource_type\":\"aigc\",\"resource_id\":\"get_all\",\"benefit_type_list\":[]},{\"resource_type\":\"normal_func\",\"resource_id\":\"get_all\",\"benefit_type_list\":[]}]}",
+  "method": "POST"
+}); ;
+fetch("https://commerce-api-sg.capcut.com/commerce/v3/benefits/batch_get_user_benefit?aid=513641&web_version=7.5.0&da_version=3.3.12&aigc_features=app_lip_sync&msToken=P8UgAFfaKiZlWF00FQw8m8vr50D8cQa0cSPR5uStVpFR6d7StUraAJI5S3ksaUEpXc4OG5K9lheUp4dTBkUcF4nWe2_rIpcqK6newVjHKyknHjiI4jNzVbuKulBA5BIbH7dt7g==&X-Bogus=DFSzswjuxbbA7IasCqifP9XFhsqU&X-Gnarly=MF-ZbkHlKLRJTomQ68G2Z-bcKaFfpfAC/Us8nDxyHt7U32uOd7/-9wMugRzviXNxyANXIqCloN0Apk11c0gQSnWCXqFSb50XqU5xITYJO3BiUQXPGF7MssoyYi7OA/TgGXqmh6IQXrLUf9RZNKDl5GC9cPPOXBut5fc4NzXFeQzdUXs0Gdqa4adfq/fqy5Q3KrUCumJCIm/jAjC9E1xzJEQMMtggtfvAlmx7g2RFx/EAkRby4JfmasJCuHagC2zyYYcIpq-ivU69", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "app-sdk-version": "48.0.0",
+    "appid": "513641",
+    "appvr": "8.4.0",
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "device-time": "1775015104",
+    "did": "7623319468606047745",
+    "lan": "zh-Hant-TW",
+    "loc": "SG",
+    "pf": "7",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "sign": "f1a4db7c8a9f2842f4fe5c5bd0e4b077",
+    "sign-ver": "1",
+    "store-country-code": "sg",
+    "store-country-code-src": "uid",
+    "tdid": "",
+    "cookie": "_ga=GA1.1.263983768.1774942387; _ga_R13M7NJQ9S=GS2.1.s1774942386$o1$g0$t1774942391$j55$l0$h0; passport_csrf_token=3758e36cef2f81a3274370278478b763; passport_csrf_token_default=3758e36cef2f81a3274370278478b763; sid_guard=e370da3d625dec471fe2d4e2b0a8e752%7C1774949694%7C5184000%7CSat%2C+30-May-2026+09%3A34%3A54+GMT; uid_tt=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; uid_tt_ss=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; sid_tt=e370da3d625dec471fe2d4e2b0a8e752; sessionid=e370da3d625dec471fe2d4e2b0a8e752; sessionid_ss=e370da3d625dec471fe2d4e2b0a8e752; tt_session_tlb_tag=sttt%7C4%7C43DaPWJd7Ecf4tTisKjnUv________-1Pa3ZzPd2OtSAs57R4zCF59oYIknqXCK3Job5VNhknIA%3D; sid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; ssid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; store-idc=alisg; store-country-code=sg; store-country-code-src=uid; cc-target-idc=alisg; tt-target-idc-sign=sS_lN8lHgu2outirZTOXwlfp3hF72dau-bpucs-7G17xKRchGRzxYvajcPi4FX500v-BKa0giQZggePwP5R_7Q9F_MB0g_8KXMszPzng2qE2GgdUhMw-IbK4WwWFb70lAo2Rp0xcxPFWw5n236RBMSUpUgSLn0uOkdeSYJJQL9mtC9f19A_N1KSsDK3KRbPjxuZBpcYPFsuUxL0YXHWm9QMxUa-9HltkdY3Ax_tfYLfTxJ8-FW6vbweONBneKvvvD6n4yCNYoRiKlUMEUd5ea73fxduWE4nfQq1f4XOMCHN-ohGnsfEgNOKGLTgp7fwkUqzVeUnY9SJPfG_DAfGVy_TgwYH6tBj-DKOrfuyO3RwsxAtEG-XIQ9yFkjf-TKktRp4nLqEOUG_qltLL2GJ1KAWKpCCf-c5PbHLBzLKH1AEa_nqZqASyHatAVjk6pn8Ju7KSrc8cnaWdcj6uVw6Ja5RPvC1DueE4r6zgdlBoi3zE3GoPjZICrhImIXSSqc6j; ttwid=1|DbMGoxWXkFbL44Nqbp8uDRupdZsep5kyQyRR0FOuOUU|1775015088|21f8783ce403d55df2a1aebc5b726b91421f0b65bb18cd4cb5b499825c0bd00f; odin_tt=eb42671ae90d57a7c4aa371667d849530c5a62fbef310fac1c34ea50a395105a8b347d5a6bc232fcd29ec36504d0abd1863da1e7e13229ab049c44eeba1b99c8; _ga_F8PY8CNX7V=GS2.1.s1775014435$o4$g1$t1775015089$j30$l0$h0; store-country-sign=MEIEDHbYBQ0JN7iwSg8z0gQgdRHyVShOq5qw7BHlGV6YL57uu1HSHl6ap0kTzxULs3IEEEtUg-Yu0BHAPxnz2qFc0Bg; msToken=suXJttI9GJr2Kia9gMqFRw2W4jPDdYuPO1fYyH7v7_ewENpU9FF_OVGHC2Vy-OWx4yp0fuVif1uveI4Z4xMoMyujkizHj9sg92t0K-Y2FDGZ8CG_klOKWbge3zLStkAstePtGg==",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"query_list\":[{\"resource_type\":\"aigc\",\"resource_id\":\"get_all\",\"benefit_type_list\":[]},{\"resource_type\":\"normal_func\",\"resource_id\":\"get_all\",\"benefit_type_list\":[]}]}",
+  "method": "POST"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"query_benefit_metadata\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"status\\\":\\\"success\\\",\\\"duration\\\":708,\\\"code\\\":0,\\\"message\\\":\\\"success\\\",\\\"event_index\\\":1775015786289}\",\"local_time_ms\":1775015105122,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015105,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"batch_get_user_benefit\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"status\\\":\\\"success\\\",\\\"duration\\\":793,\\\"code\\\":0,\\\"message\\\":\\\"success\\\",\\\"event_index\\\":1775015786290}\",\"local_time_ms\":1775015105206,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015105,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"export_status\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"prompt\\\":\\\"\\\",\\\"format\\\":\\\"mp4\\\",\\\"status\\\":\\\"success\\\",\\\"edit_type\\\":\\\"ai_video\\\",\\\"enter_source\\\":\\\"remove_watermark_detailed_download\\\",\\\"is_from_preview\\\":0,\\\"is_preset\\\":0,\\\"generate_type\\\":10,\\\"submit_id\\\":\\\"c8ca7d21-0912-4e59-9ea2-e0074510dce6\\\",\\\"task_id\\\":\\\"c8ca7d21-0912-4e59-9ea2-e0074510dce6\\\",\\\"right_id\\\":\\\"seedance_20_fast_720p_output\\\",\\\"right_type\\\":\\\"generate_video\\\",\\\"right_main_type\\\":\\\"aigc\\\",\\\"right_is_aigc\\\":\\\"1\\\",\\\"right_block_type\\\":\\\"click\\\",\\\"right_count_type\\\":\\\"duration\\\",\\\"right_subscribe_type\\\":\\\"standard\\\",\\\"right_oneoff_mix_type\\\":\\\"subscribe_before_credits\\\",\\\"right_is_trial\\\":\\\"1\\\",\\\"right_trial_mode\\\":\\\"times_trial\\\",\\\"right_trial_type\\\":\\\"limit_times\\\",\\\"right_trial_limit_left\\\":\\\"\\\",\\\"prompt_cnt\\\":0,\\\"image_prompt_cnt\\\":0,\\\"prompt_source\\\":\\\"custom\\\",\\\"model_name\\\":\\\"Dreamina Seedance 2.0 Fast\\\",\\\"model_key\\\":\\\"dreamina_seedance_40\\\",\\\"model_starling_key\\\":\\\"video_seedance_2_fast_name\\\",\\\"aspect_ratio\\\":\\\"16:9\\\",\\\"gen_mode\\\":\\\"t2v\\\",\\\"is_voice_clone\\\":0,\\\"enter_from\\\":\\\"click\\\",\\\"function_mode\\\":\\\"omni_reference\\\",\\\"description_cnt\\\":0,\\\"is_add_temp_subject\\\":1,\\\"is_add_subject\\\":0,\\\"video_id\\\":\\\"20861153449220\\\",\\\"video_duration\\\":5,\\\"is_agent_mode\\\":0,\\\"is_creative_mode\\\":0,\\\"export_time\\\":\\\"3641\\\",\\\"event_index\\\":1775015786291}\",\"local_time_ms\":1775015106914,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015106,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://mcs-normal-sg.capcutapi.com/list", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "content-type": "application/json; charset=UTF-8",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dreamina.capcut.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "[{\"events\":[{\"event\":\"page_stay_time\",\"params\":\"{\\\"_staging_flag\\\":0,\\\"is_vip\\\":0,\\\"user_subscribe_type\\\":\\\"free\\\",\\\"url_path\\\":\\\"/ai-tool/generate\\\",\\\"referrer\\\":\\\"\\\",\\\"page\\\":\\\"generation\\\",\\\"url\\\":\\\"https://dreamina.capcut.com/ai-tool/generate?type=video&workspace=0\\\",\\\"title\\\":\\\"Dreamina: Create realistic talking avatars with AI avatar generator\\\",\\\"duration\\\":8380,\\\"from\\\":\\\"from-onblur\\\",\\\"event_index\\\":1775015786292}\",\"local_time_ms\":1775015107995,\"is_bav\":0,\"ab_sdk_version\":\"75457977,121886843,75264656,75755153,75391190,75410526,75776005,75744285\",\"session_id\":\"780252f3-e04b-417f-b2e7-55da5facf2c9\"}],\"user\":{\"user_unique_id\":\"7622917973351547912\",\"user_type\":12,\"user_id\":\"7622917973351547912\",\"user_is_login\":true,\"web_id\":\"7623319468606047745\"},\"header\":{\"app_id\":513641,\"app_version\":\"0.1.0\",\"os_name\":\"windows\",\"os_version\":\"10\",\"device_model\":\"Windows NT 10.0\",\"language\":\"zh-Hant-TW\",\"region\":\"SG\",\"platform\":\"web\",\"sdk_version\":\"5.2.4_oversea\",\"sdk_lib\":\"js\",\"timezone\":8,\"tz_offset\":-28800,\"resolution\":\"1680x1050\",\"browser\":\"Chrome\",\"browser_version\":\"135.0.0.0\",\"referrer\":\"\",\"referrer_host\":\"\",\"width\":1680,\"height\":1050,\"screen_width\":1680,\"screen_height\":1050,\"tracer_data\":\"{\\\"$utm_from_url\\\":1}\",\"custom\":\"{\\\"channel_level1\\\":\\\"Direct\\\",\\\"channel_level2\\\":\\\"enter_url\\\",\\\"channel_level3\\\":\\\"\\\",\\\"channel_level4\\\":\\\"\\\",\\\"channel_from\\\":\\\"ut\\\",\\\"session_start_url\\\":\\\"https://dreamina.capcut.com/ai-tool/personal/MS4wLjABAAAAwaRBWgcevv6fNqibJpaHF1sRw2QCD2R5pOSgkSZcRCSL3xV5lDrsLO8ne6KHCe_T\\\",\\\"branch\\\":\\\"release/990\\\",\\\"user_agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\\\",\\\"theme_mode\\\":\\\"light\\\",\\\"resolution\\\":480,\\\"gpu_exist\\\":\\\"1\\\",\\\"network_type\\\":\\\"4g\\\",\\\"downlink\\\":10,\\\"rtt\\\":0,\\\"web_id\\\":\\\"7623319468606047745\\\",\\\"is_new_framework\\\":1,\\\"store_country\\\":\\\"SG\\\",\\\"language\\\":\\\"zh-Hant-TW\\\",\\\"is_vip\\\":0}\",\"aid\":513641},\"local_time\":1775015108,\"verbose\":1}]",
+  "method": "POST"
+}); ;
+fetch("https://dreamina.capcut.com/passport/web/account/info/?aid=513641&account_sdk_source=web&sdk_version=2.1.10-tiktok&language=zh-Hant-TW&verifyFp=verify_mnfd0bdk_LIRQap2I_XfpL_46Vz_BWNm_bXHNi6zDwmUW", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "appid": "513641",
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "did": "7623319468606047745",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Chromium\";v=\"135\", \"Not-A.Brand\";v=\"8\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "store-country-code": "sg",
+    "store-country-code-src": "uid",
+    "x-tt-passport-csrf-token": "3758e36cef2f81a3274370278478b763",
+    "cookie": "capcut_locale=zh-Hant-TW; g_state={\"i_l\":0,\"i_ll\":1774942385411,\"i_b\":\"oequ2ic7HEVncxkqRIlelvsLoI6HxY4HtepE+EaHA7g\",\"i_e\":{\"enable_itp_optimization\":0}}; _ga=GA1.1.263983768.1774942387; _tea_web_id=7623319468606047745; _ga_R13M7NJQ9S=GS2.1.s1774942386$o1$g0$t1774942391$j55$l0$h0; _isCommercialFreemiumStage=0; fpk1=397e6096120be7cdef6d58853b5aa877faa4bd76a8ad0f3d5d7129327ef55c4286d35b0324b49982da2bb3967a62b3ab; passport_csrf_token=3758e36cef2f81a3274370278478b763; passport_csrf_token_default=3758e36cef2f81a3274370278478b763; sid_guard=e370da3d625dec471fe2d4e2b0a8e752%7C1774949694%7C5184000%7CSat%2C+30-May-2026+09%3A34%3A54+GMT; uid_tt=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; uid_tt_ss=15b0ba46a650dac3c02c0ffee69daf38cacb3e2137451a23d9b2823ca1455f34; sid_tt=e370da3d625dec471fe2d4e2b0a8e752; sessionid=e370da3d625dec471fe2d4e2b0a8e752; sessionid_ss=e370da3d625dec471fe2d4e2b0a8e752; tt_session_tlb_tag=sttt%7C4%7C43DaPWJd7Ecf4tTisKjnUv________-1Pa3ZzPd2OtSAs57R4zCF59oYIknqXCK3Job5VNhknIA%3D; sid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; ssid_ucp_v1=1.0.1-KGJiOWU1MjNjMTQ5MDU5OTczODg2ZmE2ZDM1NWEzYzlmMWQwY2EwMGEKGQiIiL2MpPCC5WkQvqquzgYY6awfOAFA6wcQAxoDc2cxIiBlMzcwZGEzZDYyNWRlYzQ3MWZlMmQ0ZTJiMGE4ZTc1MjJOCiC_Vx5P2qxAETzbCed21z4dK270Y8-ByWUzKhXLUrTWkBIgrqrOIfM9XglTp4IyI5swyWyKgfBrIOMcg4ou7f9R67cYAiIGdGlrdG9r; store-idc=alisg; store-country-code=sg; store-country-code-src=uid; cc-target-idc=alisg; tt-target-idc-sign=sS_lN8lHgu2outirZTOXwlfp3hF72dau-bpucs-7G17xKRchGRzxYvajcPi4FX500v-BKa0giQZggePwP5R_7Q9F_MB0g_8KXMszPzng2qE2GgdUhMw-IbK4WwWFb70lAo2Rp0xcxPFWw5n236RBMSUpUgSLn0uOkdeSYJJQL9mtC9f19A_N1KSsDK3KRbPjxuZBpcYPFsuUxL0YXHWm9QMxUa-9HltkdY3Ax_tfYLfTxJ8-FW6vbweONBneKvvvD6n4yCNYoRiKlUMEUd5ea73fxduWE4nfQq1f4XOMCHN-ohGnsfEgNOKGLTgp7fwkUqzVeUnY9SJPfG_DAfGVy_TgwYH6tBj-DKOrfuyO3RwsxAtEG-XIQ9yFkjf-TKktRp4nLqEOUG_qltLL2GJ1KAWKpCCf-c5PbHLBzLKH1AEa_nqZqASyHatAVjk6pn8Ju7KSrc8cnaWdcj6uVw6Ja5RPvC1DueE4r6zgdlBoi3zE3GoPjZICrhImIXSSqc6j; DREAMINA_THEME=light; s_v_web_id=verify_mnfd0bdk_LIRQap2I_XfpL_46Vz_BWNm_bXHNi6zDwmUW; ttwid=1|DbMGoxWXkFbL44Nqbp8uDRupdZsep5kyQyRR0FOuOUU|1775015088|21f8783ce403d55df2a1aebc5b726b91421f0b65bb18cd4cb5b499825c0bd00f; odin_tt=eb42671ae90d57a7c4aa371667d849530c5a62fbef310fac1c34ea50a395105a8b347d5a6bc232fcd29ec36504d0abd1863da1e7e13229ab049c44eeba1b99c8; _ga_F8PY8CNX7V=GS2.1.s1775014435$o4$g1$t1775015089$j30$l0$h0; store-country-sign=MEIEDHbYBQ0JN7iwSg8z0gQgdRHyVShOq5qw7BHlGV6YL57uu1HSHl6ap0kTzxULs3IEEEtUg-Yu0BHAPxnz2qFc0Bg; msToken=P8UgAFfaKiZlWF00FQw8m8vr50D8cQa0cSPR5uStVpFR6d7StUraAJI5S3ksaUEpXc4OG5K9lheUp4dTBkUcF4nWe2_rIpcqK6newVjHKyknHjiI4jNzVbuKulBA5BIbH7dt7g==; msToken=hYeuuv5MOKQnBt7Fa4aBfsVoKNR-bWyMxOsQ36JwzaVoqvj99GzLmCMq9i0hktWzSYtc5jaamd9QTlCoZHnIOMualG4dFpCj2rFlSK7M0FqkZPKpMn4PatAXRJIkIRwtSNZIWw==",
+    "Referer": "https://dreamina.capcut.com/ai-tool/generate?type=video&workspace=0",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});

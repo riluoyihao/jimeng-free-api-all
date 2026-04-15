@@ -6,15 +6,22 @@
 
 即梦 AI 免费 API 服务 - 逆向工程的 API 服务器，提供 OpenAI 兼容接口，封装即梦 AI 的图像和视频生成能力。
 
-**版本：** v0.8.6
+**版本：** v0.9.1
 
 **核心功能：**
-- 文生图：支持 jimeng-5.0、jimeng-4.6、jimeng-4.5 等多款模型，最高 4K 分辨率
-- 图生图：多图合成，支持 1-10 张输入图片
+- 文生图：支持 jimeng-5.0、jimeng-4.6、jimeng-4.5 等多款模型，最高 4K 分辨率，国内版和国际版统一入口
+- 图生图：多图合成，支持 1-10 张输入图片，国内版和国际版统一入口
 - 视频生成：jimeng-video-3.5-pro 等模型，支持首帧/尾帧控制
 - Seedance 2.0：多模态智能视频生成，模型名 `jimeng-video-seedance-2.0`（兼容 `seedance-2.0`），支持图片/视频/音频混合上传，@1、@2 占位符引用素材，4-15 秒时长
+- 国际版视频：支持国际区域 Token（sg-/it-/jp-/hk- 等前缀），X-Bogus/X-Gnarly 纯算法签名绕过 shark 反爬，支持普通视频（jimeng-video-3.0/3.0-pro/3.5-pro）与 Seedance 的同步/异步两种模式
+- 国际版 VIP 无水印下载：VIP Token 自动获取无水印视频 URL，权益 API（benefit_metadata / batch_get_user_benefit）自动调用，水印状态检测日志
 - OpenAI 兼容：完全兼容 OpenAI API 格式，无缝对接现有客户端
 - 多账号支持：支持多个 sessionid 轮询使用
+
+**国际版支持（v0.9.0）：**
+- 国际版图片生成：`/v1/images/generations` 和 `/v1/images/compositions` 接受国际 Token（sg-/it-/jp-/hk- 等前缀），自动切换 assistantId 和上传通道
+- 国际版视频生成：普通视频（jimeng-video-3.0/3.0-pro/3.5-pro）+ Seedance 同步/异步
+- 区域感知路由：`parseRegionFromToken` 自动识别 Token 前缀决定走国内版还是国际版链路
 
 ## 构建和开发命令
 
@@ -57,8 +64,8 @@ src/
 ├── daemon.ts                   # 守护进程管理
 ├── api/
 │   ├── controllers/            # 业务逻辑控制器
-│   │   ├── core.ts            # 核心工具（Token处理、积分管理、请求封装）
-│   │   ├── images.ts          # 图像生成逻辑（文生图、图生图）
+│   │   ├── core.ts            # 核心工具（Token处理、积分管理、请求封装、区域解析、checkResult 兼容空响应）
+│   │   ├── images.ts          # 图像生成逻辑（文生图、图生图，复用 videos 上传通道，区域感知 assistantId）
 │   │   ├── videos.ts          # 视频生成逻辑（含 Seedance 2.0）
 │   │   └── chat.ts            # 对话补全逻辑
 │   ├── routes/                 # API 路由定义
@@ -74,7 +81,9 @@ src/
 │       └── exceptions.ts       # API 异常定义
 └── lib/
     ├── server.ts              # Koa 服务器配置（含中间件栈）
-    ├── browser-service.ts     # 浏览器代理服务（Seedance shark 反爬绕过）
+    ├── browser-service.ts     # 浏览器代理服务（Seedance CN shark 反爬绕过）
+    ├── x-bogus.ts             # X-Bogus 签名算法（国际版 shark 反爬绕过）
+    ├── x-gnarly.ts            # X-Gnarly 签名算法（ChaCha20，国际版 shark 反爬绕过）
     ├── config.ts              # 配置管理
     ├── logger.ts              # 日志工具
     ├── util.ts                # 辅助工具函数
@@ -103,10 +112,15 @@ src/
 | 端点 | 方法 | 说明 |
 |------|------|------|
 | `/v1/chat/completions` | POST | OpenAI 兼容的对话接口（用于图像/视频生成） |
-| `/v1/images/generations` | POST | 文生图/图生图接口（支持 images 可选参数） |
-| `/v1/images/compositions` | POST | 图生图接口（支持文件上传，向后兼容） |
-| `/v1/videos/generations` | POST | 视频生成接口（含 Seedance 2.0 / 2.0-fast） |
+| `/v1/images/generations` | POST | 文生图/图生图接口（支持 images 可选参数，国内版和国际版统一入口） |
+| `/v1/images/compositions` | POST | 图生图接口（支持文件上传，向后兼容，国内版和国际版统一入口） |
+| `/v1/videos/generations` | POST | 视频生成接口（含 Seedance 2.0 / 2.0-fast / 2.0-fast-vip / 2.0-vip） |
+| `/v1/videos/international/generations` | POST | 国际版视频生成（普通视频 + Seedance，同步） |
+| `/v1/videos/international/generations/async` | POST | 国际版视频生成（普通视频 + Seedance，异步提交任务） |
+| `/v1/videos/international/generations/async/:taskId` | GET | 国际版视频生成（普通视频 + Seedance，异步查询结果） |
 | `/v1/video/generations` | POST | 视频生成接口（别名路由） |
+| `/v1/videos/generations/async` | POST | 异步视频生成接口（提交任务，CN 版） |
+| `/v1/videos/generations/async/:taskId` | GET | 异步视频生成接口（查询结果，CN 版） |
 | `/v1/models` | GET | 获取可用模型列表 |
 | `/token/check` | POST | 检查 Token 有效性 |
 | `/token/points` | POST | 查询账户积分 |
@@ -118,6 +132,9 @@ src/
 - 使用即梦网站的 `sessionid` Cookie 作为 Bearer Token
 - 多账号支持：逗号分隔多个 sessionid：`Authorization: Bearer sessionid1,sessionid2`
 - 每次请求随机选择一个 sessionid 使用
+- 区域感知：Token 前缀（如 `sg-`、`hk-`）自动识别区域，决定使用国内版还是国际版链路
+- assistantId 区域映射：`getAssistantId()` 根据 `regionInfo.isInternational` 返回不同的 aid 值（CN: 513695, 国际: 513641）
+- 图片生成也支持国际版 Token：`/v1/images/generations` 和 `/v1/images/compositions` 接受国际 Token，自动使用国际版上传通道和 assistantId
 
 ### 模型映射
 
@@ -141,15 +158,17 @@ src/
 | 用户模型名 | 内部模型名 | 说明 |
 |-----------|-----------|------|
 | `jimeng-video-3.5-pro` | `dreamina_ic_generate_video_model_vgfm_3.5_pro` | 最新视频模型 |
-| `jimeng-video-3.0` | - | 视频生成 3.0 |
-| `jimeng-video-3.0-pro` | - | 视频生成 3.0 专业版 |
-| `jimeng-video-2.0` | - | 视频生成 2.0 |
-| `jimeng-video-2.0-pro` | - | 视频生成 2.0 专业版 |
+| `jimeng-video-3.0` | `dreamina_ic_generate_video_model_vgfm_3.0` | 视频生成 3.0 |
+| `jimeng-video-3.0-pro` | `dreamina_ic_generate_video_model_vgfm_3.0_pro` | 视频生成 3.0 专业版 |
 | `jimeng-video-seedance-2.0` | `dreamina_seedance_40_pro` | Seedance 2.0（上游标准名称，推荐） |
 | `seedance-2.0` | `dreamina_seedance_40_pro` | 多图智能视频生成（向后兼容别名） |
 | `seedance-2.0-pro` | `dreamina_seedance_40_pro` | 多图智能视频生成专业版（向后兼容别名） |
 | `jimeng-video-seedance-2.0-fast` | `dreamina_seedance_40` | Seedance 2.0-fast 快速版（上游标准名称） |
 | `seedance-2.0-fast` | `dreamina_seedance_40` | Seedance 2.0-fast 快速版（向后兼容别名） |
+| `jimeng-video-seedance-2.0-fast-vip` | `dreamina_seedance_40_vision` | Seedance 2.0 Fast VIP Vision 极速推理版（会员专属通道） |
+| `seedance-2.0-fast-vip` | `dreamina_seedance_40_vision` | Seedance 2.0 Fast VIP Vision（向后兼容别名） |
+| `jimeng-video-seedance-2.0-vip` | `dreamina_seedance_40_pro_vision` | Seedance 2.0 VIP Vision 主模态能力版（会员专属通道） |
+| `seedance-2.0-vip` | `dreamina_seedance_40_pro_vision` | Seedance 2.0 VIP Vision（向后兼容别名） |
 
 ### 请求参数
 
@@ -195,7 +214,10 @@ src/
 - 快速版模型名：`jimeng-video-seedance-2.0-fast`（兼容 `seedance-2.0-fast`）
 - 内部模型（标准版）：`dreamina_seedance_40_pro`，benefit_type：`dreamina_video_seedance_20_pro`
 - 内部模型（快速版）：`dreamina_seedance_40`，benefit_type：`dreamina_seedance_20_fast`（注意：无 `video_` 前缀）
-- Draft 版本：3.3.9
+- VIP 模型（Fast VIP Vision 极速推理）：`dreamina_seedance_40_vision`，benefit_type：`seedance_20_fast_720p_output`（会员专属通道）
+- VIP 模型（VIP Vision 主模态能力）：`dreamina_seedance_40_pro_vision`，benefit_type：`seedance_20_pro_720p_output`（会员专属通道）
+- Draft 版本：3.3.9（普通版）/ 3.3.12（VIP 版）
+- 生成请求新增参数：`commerce_with_input_video: "1"`、`workspace_id: 0`（v0.8.10）
 - 时长范围：4-15 秒（连续范围，与上游 iptag/jimeng-api 一致）
 - 提示词占位符：`@1`、`@2`、`@图1`、`@图2`、`@image1`、`@image2` 引用上传的素材
 - 支持的素材格式：图片（jpg/png/webp/gif/bmp）、视频（mp4/mov/m4v）、音频（mp3/wav）
@@ -206,7 +228,30 @@ src/
 - 解决方案：通过 `BrowserService`（`src/lib/browser-service.ts`）使用 Playwright 启动 headless Chromium，`bdms` SDK 自动拦截 `fetch` 并注入 `a_bogus`
 - 仅 Seedance 的 generate 请求走浏览器代理，其他请求继续用 Node.js `axios`
 - 浏览器懒启动，首次 Seedance 请求时创建；每个 sessionId 独立会话；10 分钟空闲自动清理
-- 资源拦截：屏蔽图片/字体/CSS，仅允许 bdms SDK 相关脚本（白名单域名：`vlabstatic.com`、`bytescm.com`、`jianying.com`、`byteimg.com`）
+- 资源拦截：屏蔽图片/字体/Css，仅允许 bdms SDK 相关脚本（白名单域名：`vlabstatic.com`、`bytescm.com`、`jianying.com`、`byteimg.com`）
+
+### 国际版 Shark 反爬：X-Bogus / X-Gnarly 纯算法签名（v0.8.9）
+- 国际版视频链路（普通视频与 Seedance，`mweb-api-sg.capcut.com`）同样启用了 shark 安全中间件，但无需浏览器代理
+- **X-Bogus**（URL 查询参数）：基于 MD5 + RC4 + 自定义 Base64 编码的签名算法，追加到请求 URL
+  - 实现：`src/lib/x-bogus.ts`，纯 TypeScript，无外部依赖
+  - 输入：查询字符串 + User-Agent + 请求体 → 输出：28 字符的 Base64 签名
+- **X-Gnarly**（HTTP 请求头）：基于 ChaCha20 PRNG + 自定义 Base64 编码的签名算法
+  - 实现：`src/lib/x-gnarly.ts`，纯 TypeScript，无外部依赖
+  - 输入：查询字符串 + 请求体 + User-Agent → 输出：约 300 字符的 Base64 签名
+- 在 `core.ts` 的 `request()` 函数中，对国际版请求（`regionInfo.isInternational`）自动注入这两个签名
+- X-Bogus 直接拼接到 URL（避免 axios URL 编码破坏自定义 Base64 字符），X-Gnarly 作为 HTTP 头发送
+
+### 国际版 VIP 无水印视频下载（v0.9.1）
+- `fetchHighQualityVideoUrl()` 函数新增 VIP 无水印下载流程，匹配真实浏览器下载行为
+- **权益 API 调用**：获取视频 URL 后，自动调用 commerce API 处理 VIP `remove_watermark` 权益
+  - `POST /commerce/v3/resource/benefit_metadata` — 查询权益元数据
+  - `POST /commerce/v3/benefits/batch_get_user_benefit` — 批量查询用户权益
+  - 两个调用通过 `parseRegionFromToken` 自动判断国际版用户，失败时降级不影响主流程
+- **水印状态检测**：自动检测并记录返回视频 URL 的水印标识
+  - `lr=display_watermark_busi_aigc` → 免费账号（视频带水印）
+  - `lr=display_watermark_aigc` → VIP 账号（视频无水印，`lr` 仅是埋点标签）
+- **工作原理**：服务端根据 session 的 VIP 状态生成不同的签名 CDN URL，VIP 签名指向无水印视频文件
+- **URL 提取优化**：重构为统一 `videoUrl` 变量 + 级联降级策略，支持提取后统一后处理
 
 ### 文件上传
 - 支持 multipart/form-data 文件上传
@@ -214,11 +259,18 @@ src/
 - files 字段可以是对象或数组格式（在 Request.ts 中自动规范化）
 - 支持 formLimit/jsonLimit/textLimit：100mb
 
+### 图片上传逻辑重构（v0.9.0）
+- `images.ts` 中的 `uploadImageFromUrl` 和 `uploadImageBuffer` 不再自行实现 ImageX 上传流程
+- 改为复用 `videos.ts` 中的 `uploadImageBufferForVideo`（统一上传通道）
+- 国际版图片上传走 `uploadInternationalImageUrl`
+- 新增区域感知 assistantId：`getImageAssistantId()` 根据区域返回正确的 aid
+
 ### 上传通道（v0.8.5）
 - **ImageX 通道**（图片上传）：`get_upload_token(scene=2)` → `imagex.bytedanceapi.com` → `ApplyImageUpload` / `CommitImageUpload`，返回 URI 格式 `tos-cn-i-{service_id}/{uuid}`，service_id 为 `tb4s082cfz`
 - **VOD 通道**（视频/音频上传）：`get_upload_token(scene=1)` → `vod.bytedanceapi.com` → `ApplyUploadInner` / `CommitUploadInner`，返回 vid 格式 `v028xxx`，SpaceName 为 `dreamina`
 - AWS Signature V4 签名：ImageX 使用 service=`imagex`，VOD 使用 service=`vod`，region 均为 `cn-north-1`
 - VOD 上传自动返回媒体元数据（Duration、Width、Height、Fps 等），音频时长 fallback 使用本地 WAV 头解析
+- **区域感知上传路由**（v0.8.10）：`regionFetch()` 自动判断 `regionInfo.isInternational`，国际版走 `proxyFetch`（代理），国内版走 `cnFetch`（直连），避免 CN 上传目标走代理失败
 
 ### 分辨率支持
 
@@ -311,6 +363,52 @@ curl -X POST http://localhost:8000/v1/videos/generations \
   -F "files=@/path/to/image.png" \
   -F "files=@/path/to/audio.wav"
 
+# Seedance 2.0 Fast VIP（会员专属极速推理通道）
+curl -X POST http://localhost:8000/v1/videos/generations \
+  -H "Authorization: Bearer your_sessionid" \
+  -F "model=jimeng-video-seedance-2.0-fast-vip" \
+  -F "prompt=@1 图片中的人物开始微笑" \
+  -F "ratio=4:3" \
+  -F "duration=4" \
+  -F "files=@/path/to/image.jpg"
+
+# Seedance 2.0 VIP（会员专属主模态能力通道）
+curl -X POST http://localhost:8000/v1/videos/generations \
+  -H "Authorization: Bearer your_sessionid" \
+  -F "model=jimeng-video-seedance-2.0-vip" \
+  -F "prompt=@1 和 @2 两人开始跳舞" \
+  -F "ratio=4:3" \
+  -F "duration=5" \
+  -F "files=@/path/to/image1.jpg" \
+  -F "files=@/path/to/image2.jpg"
+
+# 国际版普通视频同步生成
+curl -X POST http://localhost:8000/v1/videos/international/generations \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sg-your_sessionid" \
+  -d '{"model": "jimeng-video-3.0", "prompt": "A cute cat walking slowly on grass, cinematic, natural motion", "ratio": "16:9", "resolution": "720p", "duration": 5}'
+
+# 国际版 Seedance 同步生成
+curl -X POST http://localhost:8000/v1/videos/international/generations \
+  -H "Authorization: Bearer sg-your_sessionid" \
+  -F "model=seedance-2.0-fast" \
+  -F "prompt=@1 中的人物开始微笑并转身" \
+  -F "ratio=4:3" \
+  -F "duration=4" \
+  -F "image_file=@/path/to/image.jpg"
+
+# 国际版普通视频 / Seedance 异步生成（提交任务）
+curl -X POST http://localhost:8000/v1/videos/international/generations/async \
+  -H "Authorization: Bearer sg-your_sessionid" \
+  -F "model=seedance-2.0-fast" \
+  -F "prompt=@1 中的人物开始微笑并转身" \
+  -F "ratio=4:3" \
+  -F "duration=4" \
+  -F "image_file=@/path/to/image.jpg"
+
+# 国际版视频异步生成（查询结果）
+curl http://localhost:8000/v1/videos/international/generations/async/{task_id}
+
 # 健康检查
 curl http://localhost:8000/ping
 
@@ -324,3 +422,52 @@ curl -X POST http://localhost:8000/token/check \
 
 默认端口：8000
 配置文件在 `configs/` 目录，使用 YAML 格式。
+
+## 国际版视频（v0.8.9，v0.9.0 新增普通视频）
+
+国际版视频链路使用 CapCut/Dreamina 国际平台（`mweb-api-sg.capcut.com`），支持非中国大陆区域的用户 Token。
+
+v0.9.0 起，国际版同步/异步接口新增支持普通视频模型（`jimeng-video-3.5-pro`、`jimeng-video-3.0`、`jimeng-video-3.0-pro`），与 Seedance 模型统一入口：
+- 普通视频：`duration` 仅支持 5 或 10 秒，默认 1:1 比例，支持首帧/尾帧图生视频
+- Seedance：`duration` 支持 4-15 秒，默认 4:3 比例，至少需要一个素材
+
+### 支持的区域前缀
+| 前缀 | 区域 | 前缀 | 区域 | 前缀 | 区域 | 前缀 | 区域 |
+|------|------|------|------|------|------|------|------|
+| `sg-` | 新加坡 | `hk-` | 香港 | `jp-` | 日本 | `it-` | 意大利 |
+| `al-` | 阿尔巴尼亚 | `az-` | 阿塞拜疆 | `bh-` | 巴林 | `ca-` | 加拿大 |
+| `cl-` | 智利 | `de-` | 德国 | `gb-` | 英国 | `gy-` | 圭亚那 |
+| `il-` | 以色列 | `iq-` | 伊拉克 | `jo-` | 约旦 | `kg-` | 吉尔吉斯 |
+| `om-` | 阿曼 | `pk-` | 巴基斯坦 | `pt-` | 葡萄牙 | `sa-` | 沙特 |
+| `se-` | 瑞典 | `tr-` | 土耳其 | `tz-` | 坦桑尼亚 | `uz-` | 乌兹别克 |
+| `ve-` | 委内瑞拉 | `xk-` | 科索沃 | | | | |
+
+### Shark 反爬绕过
+国际版与国内版不同，**不需要 Playwright 浏览器代理**。通过纯算法签名绕过：
+- **X-Bogus**（`src/lib/x-bogus.ts`）：MD5 + RC4 + 自定义 Base64，追加到 URL 查询参数
+- **X-Gnarly**（`src/lib/x-gnarly.ts`）：ChaCha20 PRNG + 自定义 Base64，作为 HTTP 请求头发送
+- 在 `core.ts` 的 `request()` 函数中自动注入，对国际版请求完全透明
+
+### 素材上传
+国际版素材上传到国际版 ImageX/VOD 服务端点（`tos-alisg-i-wopfjsm1ax-sg` 等），签名使用与国内版相同的 AWS Signature V4 方式，但使用国际版凭证。
+
+### 支持的模型
+
+#### 国际版普通视频模型
+| 模型名 | 内部模型 | benefit_type |
+|--------|---------|-------------|
+| `jimeng-video-3.5-pro` | `dreamina_ic_generate_video_model_vgfm_3.5_pro` | `dreamina_video_seedance_15_pro` |
+| `jimeng-video-3.0-pro` | `dreamina_ic_generate_video_model_vgfm_3.0_pro` | `basic_video_operation_vgfm_v_three` |
+| `jimeng-video-3.0` | `dreamina_ic_generate_video_model_vgfm_3.0` | `basic_video_operation_vgfm_v_three` |
+
+#### 国际版 Seedance 模型
+| 模型名 | 内部模型 | benefit_type |
+|--------|---------|-------------|
+| `seedance-2.0-fast` | `dreamina_seedance_40` | `seedance_20_fast_720p_output` |
+| `seedance-2.0-pro` | `dreamina_seedance_40_pro` | `seedance_20_pro_720p_output` |
+| `jimeng-video-seedance-2.0-fast` | `dreamina_seedance_40` | `seedance_20_fast_720p_output` |
+| `jimeng-video-seedance-2.0` | `dreamina_seedance_40_pro` | `seedance_20_pro_720p_output` |
+| `seedance-2.0-fast-vip` | `dreamina_seedance_40_vision` | `seedance_20_fast_720p_output` |
+| `jimeng-video-seedance-2.0-fast-vip` | `dreamina_seedance_40_vision` | `seedance_20_fast_720p_output` |
+| `seedance-2.0-vip` | `dreamina_seedance_40_pro_vision` | `seedance_20_pro_720p_output` |
+| `jimeng-video-seedance-2.0-vip` | `dreamina_seedance_40_pro_vision` | `seedance_20_pro_720p_output` |

@@ -32,3 +32,12 @@ curl(nodejs)-seedance2.0fast.txt
 curl(nodejs)-seedance2.0fast+声音.txt
 curl(nodejs)-seedance2.0fast+声音2.txt
 data/*.db
+.ipynb_checkpoints/curl(node.js)_jimeng-5.0lite-checkpoint.txt
+# Test data
+hk-tokens.json
+# OMC
+.omc/
+# Claude local settings
+.claude/
+docs/international-seedance-design.md
+tmp/async-tasks/8e6526a0-31a3-11f1-8a87-e5ec8e5c680e.json

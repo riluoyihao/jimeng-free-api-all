@@ -29,6 +29,10 @@ export default class Request {
     params: any;
     /** 请求载荷 */
     body: any;
+    /** 上传的原始文件对象 */
+    rawFiles: any;
+    /** 按字段名归类的上传文件 */
+    filesMap: Record<string, any[]>;
     /** 上传的文件 */
     files: any[];
     /** 客户端IP地址 */
@@ -48,21 +52,24 @@ export default class Request {
         this.params = ctx.params || {};
         this.body = ctx.request.body || {};
         // koa-body 的 files 可能是对象 { files: [File, File] } 或 { files: File }
-        // 需要统一转换为数组格式
+        // 保留原始 keyed 结构，同时兼容旧的扁平数组行为
         const rawFiles = ctx.request.files;
+        this.rawFiles = rawFiles || {};
+        this.filesMap = {};
         if (rawFiles) {
             if (Array.isArray(rawFiles)) {
                 this.files = rawFiles;
+                if (rawFiles.length > 0) this.filesMap.files = rawFiles;
             } else if (typeof rawFiles === 'object') {
-                // 遍历对象，提取所有文件
                 const filesArray: any[] = [];
                 for (const key in rawFiles) {
                     const fileOrFiles = rawFiles[key];
-                    if (Array.isArray(fileOrFiles)) {
-                        filesArray.push(...fileOrFiles);
-                    } else if (fileOrFiles) {
-                        filesArray.push(fileOrFiles);
-                    }
+                    const normalizedFiles = Array.isArray(fileOrFiles)
+                        ? fileOrFiles.filter(Boolean)
+                        : fileOrFiles ? [fileOrFiles] : [];
+                    if (normalizedFiles.length === 0) continue;
+                    this.filesMap[key] = normalizedFiles;
+                    filesArray.push(...normalizedFiles);
                 }
                 this.files = filesArray;
             } else {
